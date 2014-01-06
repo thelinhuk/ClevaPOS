@@ -92,6 +92,7 @@ public class AppUI extends JFrame implements ActionListener{
 	private TextPrompt tp;
 	private static float totAfterDiscount;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	private float change;
 	private Calendar now;
@@ -111,6 +112,8 @@ public class AppUI extends JFrame implements ActionListener{
 	private String uniqueID;
 	private Print print;
 =======
+=======
+>>>>>>> 5ed5102ebca0d19ca619558e15da24bb5d026931
 	private static int p = 30;
 	private JButton btnDiscount;
 	private JTextField txtUserID;
