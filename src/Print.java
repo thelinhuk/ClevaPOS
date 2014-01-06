@@ -10,7 +10,7 @@ public class Print {
 	POSPrinterControl113 ptr;
 	CashDrawerControl113 draw;
 	public final int MAX_LINE_WIDTHS = 2;
-
+//test
 	
 	public Print(){
 		ptr = (POSPrinterControl113)new POSPrinter();
