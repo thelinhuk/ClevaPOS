@@ -97,7 +97,24 @@ public class AppUI extends JFrame implements ActionListener{
 	private JLabel lblCashGiven;
 	private JLabel lblChange;
 	//private Print print;
+	
+	private float change;
+	private Calendar now;
+	private JButton btnPay;
+	private Print printTransaction;
 
+	private ArrayList itemID;
+	private ArrayList itemName;
+	private ArrayList column;
+	private ArrayList values;
+	private String staffID;
+	private String shopID;
+	private String customerID;
+	private DBQuery InsertItem;
+	private int discount;
+	private float totalPrice; 
+	private String uniqueID;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -119,7 +136,14 @@ public class AppUI extends JFrame implements ActionListener{
 	 */
 	public AppUI() {
 		
+		change = 0;
+		shopID = "001";
+		uniqueID = "";
 		
+		price = new ArrayList();
+		itemID = new ArrayList();
+		itemName = new ArrayList();
+		calculator = new Calculator();
 		price = new ArrayList();
 		calculator = new Calculator();
 		//setUndecorated(true);
@@ -255,7 +279,7 @@ public class AppUI extends JFrame implements ActionListener{
 		panel_24.setLayout(new BorderLayout(0, 0));
 		panel_24.add(scrollPane);
 		
-		lblTotal = new JLabel("Total: \u00A30.00");
+		lblTotal = new JLabel("Total:");
 		GridBagConstraints gbc_lblTotal = new GridBagConstraints();
 		gbc_lblTotal.gridx = 0;
 		gbc_lblTotal.gridy = 1;
@@ -296,11 +320,13 @@ public class AppUI extends JFrame implements ActionListener{
 		btnDiscount.setForeground(Color.WHITE);
 		btnDiscount.setFont(new Font("Tahoma", Font.BOLD, 24));
 		btnDiscount.setBackground(new Color(44, 91, 166));
-		
-		JButton btnNewButton = new JButton("PAY");
-		btnNewButton.setBounds(341, 4, 322, 72);
-		panel_28.add(btnNewButton);
 		btnDiscount.addActionListener(this);
+		
+		btnPay = new JButton("PAY");
+		btnPay.addActionListener(this);
+		btnPay.setBounds(341, 4, 322, 72);
+		panel_28.add(btnPay);
+		
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(45, 50, 61));
@@ -694,8 +720,8 @@ public class AppUI extends JFrame implements ActionListener{
 	    
 	    javax.swing.Timer timer2 = new javax.swing.Timer(TIMER_DELAY, new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
-	            Calendar now = Calendar.getInstance();
-	          lblDateTime.setText(dateFormat.format(now.getTime()));
+	    		now = Calendar.getInstance();
+	    		lblDateTime.setText(dateFormat.format(now.getTime()));
 	    	}
 	    });
 	    timer2.start();
@@ -709,6 +735,7 @@ public class AppUI extends JFrame implements ActionListener{
 		KeyPad keypad;
 		Categories cats;
 		JButton btnAction = (JButton)e.getSource();
+		
 		float customerPay = 0;
 		if(btnAction.getText().equals("List Items")){
 			cats = new Categories();
@@ -738,7 +765,6 @@ public class AppUI extends JFrame implements ActionListener{
 			keypad = new KeyPad();
 			String txtVal = keypad.validateSearch(btnAction.getText(),txtSearch.getText());
 			
-			System.out.println("Hello");
 			txtSearch.setText(txtVal);
 			
 		}else if(isPaid.equals("customerID")){
@@ -746,15 +772,15 @@ public class AppUI extends JFrame implements ActionListener{
 			String txtVal = keypad.validateSearch(btnAction.getText(),txtCustomerID.getText());
 		
 			txtCustomerID.setText(txtVal);
-			System.out.println("Hello");
 
 		}
 
 		if(isSwitch && btnAction.getText().equals("Login")){
-			String srch = txtUserID.getText();
+			//String srch = txtUserID.getText();
+			staffID = txtUserID.getText();
 			dbQuery = new DBQuery("root","root");
 			dbQuery.connectDB();
-			if(dbQuery.isLogin(srch)){	   			
+			if(dbQuery.isLogin(staffID)){	   			
 				btnFind.setEnabled(true);
     			btnDelete.setEnabled(true);
     			btnClear.setEnabled(true);
@@ -776,7 +802,7 @@ public class AppUI extends JFrame implements ActionListener{
 			dbQuery = new DBQuery("root","root");
 			dbQuery.connectDB();
 			item = dbQuery.getItem(txtSearch.getText());
-			txtSearch.setText("");
+			
 			if(item.size() > 0){
 				model.addRow(new Object[]{item.get(0),item.get(1)});
 				price.add(item.get(1));
@@ -784,7 +810,7 @@ public class AppUI extends JFrame implements ActionListener{
 				lblTotal.setText("Total: £"+ total);
 				//System.out.println("added--- " + item.get(0));
 			}
-			
+			txtSearch.setText("");
 		}else if(btnAction.getText().equals("Remove")){
 			if(table.getRowCount() > 0){
 				
