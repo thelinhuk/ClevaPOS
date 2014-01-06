@@ -808,6 +808,8 @@ public class AppUI extends JFrame implements ActionListener{
 				price.add(item.get(1));
 				total = calculator.total(price);
 				lblTotal.setText("Total: £"+ total);
+				itemID.add(txtSearch.getText());
+
 				//System.out.println("added--- " + item.get(0));
 			}
 			txtSearch.setText("");
@@ -837,8 +839,61 @@ public class AppUI extends JFrame implements ActionListener{
 				
 			}
 		}else if(btnAction.getText().equals("PAY")){
+			column = new ArrayList();
+			values = new ArrayList();
+			InsertItem = new DBQuery("posadmin_pos","clevapos123");
+			InsertItem.setHost("jdbc:mysql://173.254.28.135:3306/posadmin_pos");
+			InsertItem.connectDB();
+			
+			
+			column.add("items_id");
+			column.add("staff_id");
+			column.add("customer_id");
+			column.add("shop_id");
+			column.add("payment_code");
 			//print = new Print();
-			//print.printReceipt();	
+			//print.printReceipt();
+			customerID = txtCustomerID.getText();
+			uniqueID = UUID.randomUUID().toString();
+			values.add("");
+			values.add("'" + staffID+"'");
+			values.add("'" + customerID+"'");
+			values.add("'" +shopID+"'" );
+			values.add("'" +uniqueID+"'");
+			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+				@Override
+				protected Void doInBackground() throws Exception {
+									// TODO Auto-generated method stub
+						String query;
+			 					
+						for(int i =0;i < itemID.size();i++){
+											
+							values.set(0, "'" +itemID.get(i).toString()+"'");
+							query = InsertItem.buildInsertQuery("transaction", column, values);
+							System.out.println(query);
+								InsertItem.insertTransaction(query);
+						}
+						column.clear();
+						values.clear();
+						column.add("payment_code");
+						column.add("discount_val");
+						column.add("total");
+						values.add("'"+uniqueID+"'");
+						values.add("'"+discount+"'");
+						values.add("'"+total+"'");
+						query = InsertItem.buildInsertQuery("payment", column, values);
+						InsertItem.insertTransaction(query);
+					
+						return null;
+				}
+		
+				protected void done(){
+					InsertItem.closeConnection();
+				}
+					
+				};
+				
+				worker.execute();
 		}else if(btnAction.getText().equals("ENTER")){
 			
 			if(table.getRowCount() == 0){
@@ -883,6 +938,38 @@ public class AppUI extends JFrame implements ActionListener{
 		lblTotal.setText("Total: £" + total);
 	}
 	
+	public void print(JTable table){
+		 	ArrayList<String> itemname = new ArrayList<String>();
+		 	ArrayList<String> itemprice = new ArrayList<String>();
+		 	printTransaction = new Print();
+			String usrID = "";
+	 		String itm = "";
+		 	String itp = "";
+	 		String paid = "";
+	 		String time = "";
+			String totalStr = "";
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			time = dateFormat.format(now.getTime()).toLowerCase();
+			usrID = "CID: " + txtUserID.getText();
+			paid = txtPaid.getText();
+	   
+			String brand = "USA Star Nails";
+			String tel = "Tel: 020 7435 6009";
+			String address = "3 holly hill, London NW3 6QN";
+	
+			for (int count = 0; count < model.getRowCount(); count++){
+		         	itm = model.getValueAt(count, 0).toString();
+		         	itemname.add(itm);
+		         	itp = model.getValueAt(count, 1).toString();
+			        itemprice.add(itp);
+			        if(!itemname.equals("Discount")){
+		         		totalPrice += Float.valueOf(itp);
+			         	}
+		         }
+		         
+		    
+			printTransaction.printReceipt(brand, tel, address, change+"", paid, totalPrice+"", itemname, itemprice, dateFormat.format(now.getTime()).toString(),"");
+	}
 	public void removeSelectedRow(JTable table){
 		DefaultTableModel model = (DefaultTableModel) this.table.getModel();
 		int[] rows = table.getSelectedRows();
