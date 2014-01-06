@@ -91,7 +91,24 @@ public class AppUI extends JFrame implements ActionListener{
 	private JButton btnRemove;
 	private TextPrompt tp;
 	private static float totAfterDiscount;
-	//private Print print;
+	
+	private float change;
+	private Calendar now;
+	private JButton btnPay;
+	private Print printTransaction;
+	
+	private ArrayList itemID;
+	private ArrayList itemName;
+	private ArrayList column;
+	private ArrayList values;
+	private String staffID;
+	private String shopID;
+	private String customerID;
+	private DBQuery InsertItem;
+	private int discount;
+	private float totalPrice; 
+	private String uniqueID;
+	private Print print;
 
 	/**
 	 * Launch the application.
@@ -113,6 +130,15 @@ public class AppUI extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public AppUI() {
+		
+		
+		change = 0;
+		shopID = "001";
+		uniqueID = "";
+		price = new ArrayList();
+		itemID = new ArrayList();
+		itemName = new ArrayList();
+		calculator = new Calculator();
 		
 		
 		price = new ArrayList();
@@ -250,7 +276,8 @@ public class AppUI extends JFrame implements ActionListener{
 		panel_24.setLayout(new BorderLayout(0, 0));
 		panel_24.add(scrollPane);
 		
-		lblTotal = new JLabel("Total: \u00A30.00");
+		//lblTotal = new JLabel("Total: \u00A30.00");
+		lblTotal = new JLabel("Total:");
 		GridBagConstraints gbc_lblTotal = new GridBagConstraints();
 		gbc_lblTotal.gridx = 0;
 		gbc_lblTotal.gridy = 1;
@@ -291,11 +318,14 @@ public class AppUI extends JFrame implements ActionListener{
 		btnDiscount.setForeground(Color.WHITE);
 		btnDiscount.setFont(new Font("Tahoma", Font.BOLD, 24));
 		btnDiscount.setBackground(new Color(44, 91, 166));
-		
-		JButton btnNewButton = new JButton("PAY");
-		btnNewButton.setBounds(341, 4, 322, 72);
-		panel_28.add(btnNewButton);
 		btnDiscount.addActionListener(this);
+		
+		btnPay = new JButton("PAY");
+		btnPay.addActionListener(this);
+		btnPay.setBounds(341, 4, 322, 72);
+		panel_28.add(btnPay);
+
+	
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(45, 50, 61));
@@ -689,7 +719,7 @@ public class AppUI extends JFrame implements ActionListener{
 	    
 	    javax.swing.Timer timer2 = new javax.swing.Timer(TIMER_DELAY, new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
-	            Calendar now = Calendar.getInstance();
+	    	 now = Calendar.getInstance();
 	          lblDateTime.setText(dateFormat.format(now.getTime()));
 	    	}
 	    });
@@ -733,7 +763,6 @@ public class AppUI extends JFrame implements ActionListener{
 			keypad = new KeyPad();
 			String txtVal = keypad.validateSearch(btnAction.getText(),txtSearch.getText());
 			
-			System.out.println("Hello");
 			txtSearch.setText(txtVal);
 			
 		}else if(isPaid.equals("customerID")){
@@ -741,15 +770,14 @@ public class AppUI extends JFrame implements ActionListener{
 			String txtVal = keypad.validateSearch(btnAction.getText(),txtCustomerID.getText());
 		
 			txtCustomerID.setText(txtVal);
-			System.out.println("Hello");
 
 		}
 
 		if(isSwitch && btnAction.getText().equals("Login")){
-			String srch = txtUserID.getText();
+			staffID = txtUserID.getText();
 			dbQuery = new DBQuery("root","root");
 			dbQuery.connectDB();
-			if(dbQuery.isLogin(srch)){	   			
+			if(dbQuery.isLogin(staffID)){	   			
 				btnFind.setEnabled(true);
     			btnDelete.setEnabled(true);
     			btnClear.setEnabled(true);
@@ -771,7 +799,6 @@ public class AppUI extends JFrame implements ActionListener{
 			dbQuery = new DBQuery("root","root");
 			dbQuery.connectDB();
 			item = dbQuery.getItem(txtSearch.getText());
-			txtSearch.setText("");
 			if(item.size() > 0){
 				model.addRow(new Object[]{item.get(0),item.get(1)});
 				price.add(item.get(1));
@@ -779,35 +806,75 @@ public class AppUI extends JFrame implements ActionListener{
 				lblTotal.setText("Total: £"+ total);
 				//System.out.println("added--- " + item.get(0));
 			}
+			txtSearch.setText("");
 			
 		}else if(btnAction.getText().equals("Remove")){
 			if(table.getRowCount() > 0){
 				
-//				if(totAfterDiscount != 0){
-//					String totalWithDis = lblTotal.getText();
-//					totalWithDis = totalWithDis.replaceAll("[^0-9.]", "");
-//					String p = (String) ppp;
-//					//ppp = ppp + () ((Double) prova).floatValue();
-//					total = Float.parseFloat(p);
-//					total = (Float.parseFloat(totalWithDis)+total)-totAfterDiscount;					
-//					lblTotal.setText("Total: £"+ total);
-//					removeSelectedRow(table);
-//					
-//					//System.out.println("OKKK");
-//					totAfterDiscount = 0;
-//					//return;
-//				}
-//				else{
-				
 				removeSelectedRow(table);
 				total = calculator.total(price);
 				lblTotal.setText("Total: £"+ total);
-				//}
-				
+
 			}
 		}else if(btnAction.getText().equals("PAY")){
+			column = new ArrayList();
+			values = new ArrayList();
 			//print = new Print();
-			//print.printReceipt();	
+			print(table);	
+			
+			InsertItem = new DBQuery("posadmin_pos","clevapos123");
+			InsertItem.setHost("jdbc:mysql://173.254.28.135:3306/posadmin_pos");
+			InsertItem.connectDB();
+	
+					
+			column.add("items_id");
+			column.add("staff_id");
+			column.add("customer_id");
+			column.add("shop_id");
+			column.add("payment_code");
+			customerID = txtCustomerID.getText();
+			uniqueID = UUID.randomUUID().toString();
+			values.add("");
+			values.add("'" + staffID+"'");
+			values.add("'" + customerID+"'");
+			values.add("'" +shopID+"'" );
+			values.add("'" +uniqueID+"'");
+			 			
+			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){	
+			
+			 	 				@Override
+			 protected Void doInBackground() throws Exception {
+		 					// TODO Auto-generated method stub
+						String query;
+					
+						for(int i =0;i < itemID.size();i++){
+							
+						values.set(0, "'" +itemID.get(i).toString()+"'");
+						query = InsertItem.buildInsertQuery("transaction", column, values);
+ 							System.out.println(query);
+	 						InsertItem.insertTransaction(query);
+						}
+						column.clear();
+							values.clear();
+						column.add("payment_code");
+						column.add("discount_val");
+		 				column.add("total");
+						values.add("'"+uniqueID+"'");
+						values.add("'"+discount+"'");
+		 				values.add("'"+total+"'");
+	 					query = InsertItem.buildInsertQuery("payment", column, values);
+						InsertItem.insertTransaction(query);
+	 					
+						return null;
+					}
+
+		 	 		protected void done(){
+		 	 			InsertItem.closeConnection();		
+		 	 		}		
+			};
+				
+			worker.execute();
+			
 		}else if(btnAction.getText().equals("ENTER")){
 			
 			if(table.getRowCount() == 0){
@@ -817,10 +884,10 @@ public class AppUI extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null, "Please enter amount customer has paid");
 
 			}else{
-				customerPay = Float.valueOf(txtPaid.getText());
-				customerPay = calculator.getChange(table, customerPay);
-				System.out.println(customerPay);
-				lblChange.setText("£ "+customerPay+"");
+				change = Float.valueOf(txtPaid.getText());
+				change = calculator.getChange(table, change);
+				System.out.println(change);
+				lblChange.setText("£ "+change+"");
 			}		
 		}
 		
@@ -831,11 +898,7 @@ public class AppUI extends JFrame implements ActionListener{
 		return tot;	
 	}
 	
-//	public static float getTotal(){
-//	float tot = calculator.total(price);
-//	return tot;	
-//}
-	
+
 	public static void setTotalAfterDiscount(float totalAfterDiscount){
 		//String newTotal = Float.toString(t);
 
@@ -852,12 +915,47 @@ public class AppUI extends JFrame implements ActionListener{
 		lblTotal.setText("Total: £" + total);
 	}
 	
+	public void print(JTable table){
+		ArrayList<String> itemname = new ArrayList<String>();
+		ArrayList<String> itemprice = new ArrayList<String>();
+		printTransaction = new Print();
+		String usrID = "";
+		String itm = "";
+		String itp = "";
+		String paid = "";
+		String time = "";
+		String totalStr = "";
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		time = dateFormat.format(now.getTime()).toLowerCase();
+		usrID = "CID: " + txtUserID.getText();
+		paid = txtPaid.getText();
+ 
+		String brand = "USA Star Nails";
+		String tel = "Tel: 020 7435 6009";
+		String address = "3 holly hill, London NW3 6QN";
+		
+		for (int count = 0; count < model.getRowCount(); count++){
+		       	itm = model.getValueAt(count, 0).toString();
+		        itemname.add(itm);
+		        itp = model.getValueAt(count, 1).toString();
+	        	itemprice.add(itp);
+	        	if(!itemname.equals("Discount")){
+	        		totalPrice += Float.valueOf(itp);
+	        	}
+	         }
+		         
+	        printTransaction.printReceipt(brand, tel, address, change+"", paid, totalPrice+"", itemname, itemprice, dateFormat.format(now.getTime()).toString(),"");
+	}
 	public void removeSelectedRow(JTable table){
 		DefaultTableModel model = (DefaultTableModel) this.table.getModel();
 		int[] rows = table.getSelectedRows();
 		for(int i=0;i< rows.length;i++){
 			model.removeRow(rows[i]-i);
 			price.remove(rows[i]-i);
+			if(!model.getValueAt(i, 0).toString().equals("Discounts")){
+				itemID.remove(rows[i]-i);
+				 				
+			}
 		}
 	}
 	static int p = 30;

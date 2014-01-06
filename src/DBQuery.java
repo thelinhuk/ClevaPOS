@@ -180,12 +180,57 @@ class DBQuery{
 		try{
 			if(conn != null){
 				statement = conn.createStatement();
-				rs = statement.executeQuery(query);	
+				rs = statement.executeQuery(query);
+				
 			}
 		}catch(Exception e){
-			System.out.println(e.toString());	
+			System.out.println(e.toString());
+			
 		}
+
+
 		return rs;
+	}
+	
+	public String buildInsertQuery(String tablename,ArrayList column, ArrayList values){
+		String query = "Insert into " + tablename+" (";
+		
+		for(int i = 0;i < column.size();i++){
+			if(!(i == column.size()-1)){
+				query +=column.get(i).toString() + ",";
+			}else{
+				query +=column.get(i).toString();
+
+			}
+		}
+		query += ")values(";
+		
+		for(int i =0; i < values.size();i++){
+			if(!(i == values.size()-1)){
+				query +=values.get(i).toString() + ",";
+			}else{
+				query +=values.get(i).toString();
+			}
+		}
+		query += ")";
+		
+		
+		return query;
+	}
+	
+	public void insertTransaction(String query){
+		Statement statement;
+		try{
+			if(conn != null){
+				statement = conn.createStatement();
+				statement.executeUpdate(query);
+			
+			}
+		}catch(Exception e){
+			System.out.println(e.toString());
+			
+		}
+		
 	}
 	
 	public void closeConnection(){
@@ -195,6 +240,8 @@ class DBQuery{
 			e.printStackTrace();
 		}
 	}
+	
+	
 		
 	
 
