@@ -91,11 +91,6 @@ public class AppUI extends JFrame implements ActionListener{
 	private JButton btnRemove;
 	private TextPrompt tp;
 	private static float totAfterDiscount;
-	private static int p = 30;
-	private JButton btnDiscount;
-	private JTextField txtUserID;
-	private JLabel lblCashGiven;
-	private JLabel lblChange;
 	//private Print print;
 	
 	private float change;
@@ -891,9 +886,15 @@ public class AppUI extends JFrame implements ActionListener{
 			price.remove(rows[i]-i);
 		}
 	}
-
+	static int p = 30;
+	private JButton btnDiscount;
+	private JTextField txtUserID;
+	private JLabel lblCashGiven;
+	private JLabel lblChange;
+	static Object ppp;
 	public static void setLabel(String item, Object prc){
 		//lblItems.setText(setValue);
+		ppp = prc;
 		model.addRow(new Object[]{item,prc});
 		price.add(prc);
 		total = calculator.total(price);
