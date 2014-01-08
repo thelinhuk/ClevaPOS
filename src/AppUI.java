@@ -147,7 +147,7 @@ public class AppUI extends JFrame implements ActionListener{
 		price = new ArrayList();
 		calculator = new Calculator();
 		//setUndecorated(true);
-		counter++;
+		counter = 201;
 		isSwitch = false;
 		isPaid = "";
 		total = 0;
@@ -839,11 +839,12 @@ public class AppUI extends JFrame implements ActionListener{
 				
 			}
 		}else if(btnAction.getText().equals("PAY")){
+			print(table);
 			column = new ArrayList();
 			values = new ArrayList();
 			InsertItem = new DBQuery("posadmin_pos","clevapos123");
 			InsertItem.setHost("jdbc:mysql://173.254.28.135:3306/posadmin_pos");
-			InsertItem.connectDB();
+			
 			
 			
 			column.add("items_id");
@@ -851,7 +852,7 @@ public class AppUI extends JFrame implements ActionListener{
 			column.add("customer_id");
 			column.add("shop_id");
 			column.add("payment_code");
-			print(table);
+			
 			customerID = txtCustomerID.getText();
 			uniqueID = UUID.randomUUID().toString();
 			values.add("");
@@ -864,13 +865,14 @@ public class AppUI extends JFrame implements ActionListener{
 				protected Void doInBackground() throws Exception {
 									// TODO Auto-generated method stub
 						String query;
+						InsertItem.connectDB();
 			 					
 						for(int i =0;i < itemID.size();i++){
 											
 							values.set(0, "'" +itemID.get(i).toString()+"'");
 							query = InsertItem.buildInsertQuery("transaction", column, values);
 							System.out.println(query);
-								InsertItem.insertTransaction(query);
+							InsertItem.insertTransaction(query);
 						}
 						column.clear();
 						values.clear();
@@ -963,8 +965,10 @@ public class AppUI extends JFrame implements ActionListener{
 			        itemprice.add(itp);
 			        if(!itemname.equals("Discount")){
 		         		totalPrice += Float.valueOf(itp);
-			         	}
-		         }
+			        }
+		   }
+			
+			change = Integer.parseInt(paid) - total;
 		         
 		    
 			printTransaction.printReceipt(brand, tel, address, change+"", paid, totalPrice+"", itemname, itemprice, dateFormat.format(now.getTime()).toString(),"");
