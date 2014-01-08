@@ -814,28 +814,11 @@ public class AppUI extends JFrame implements ActionListener{
 			}
 			txtSearch.setText("");
 		}else if(btnAction.getText().equals("Remove")){
-			if(table.getRowCount() > 0){
-				
-//				if(totAfterDiscount != 0){
-//					String totalWithDis = lblTotal.getText();
-//					totalWithDis = totalWithDis.replaceAll("[^0-9.]", "");
-//					String p = (String) ppp;
-//					//ppp = ppp + () ((Double) prova).floatValue();
-//					total = Float.parseFloat(p);
-//					total = (Float.parseFloat(totalWithDis)+total)-totAfterDiscount;					
-//					lblTotal.setText("Total: £"+ total);
-//					removeSelectedRow(table);
-//					
-//					//System.out.println("OKKK");
-//					totAfterDiscount = 0;
-//					//return;
-//				}
-//				else{
-				
+			if(table.getRowCount() >= 0){
+
 				removeSelectedRow(table);
 				total = calculator.total(price);
 				lblTotal.setText("Total: £"+ total);
-				//}
 				
 			}
 		}else if(btnAction.getText().equals("PAY")){
