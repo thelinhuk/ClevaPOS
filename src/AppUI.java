@@ -51,6 +51,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -828,6 +830,7 @@ public class AppUI extends JFrame implements ActionListener{
 			}
 			txtSearch.setText("");
 		}else if(btnAction.getText().equals("Remove")){
+			String current_date = "";
 			if(table.getRowCount() >= 0){
 
 				removeSelectedRow(table);
@@ -835,20 +838,23 @@ public class AppUI extends JFrame implements ActionListener{
 				lblTotal.setText("Total: £"+ total);
 				
 			}
-		}else if(btnAction.getText().equals("PAY")){
+		}else if(btnAction.getText().equals("Pay")){
 			print(table);
 			column = new ArrayList();
 			values = new ArrayList();
 			InsertItem = new DBQuery("posadmin_pos","clevapos123");
 			InsertItem.setHost("jdbc:mysql://173.254.28.135:3306/posadmin_pos");
 			
-			
+	
+			java.util.Date date = new Date();
+			Timestamp timestamp = new Timestamp(date.getTime());
 			
 			column.add("items_id");
 			column.add("staff_id");
 			column.add("customer_id");
 			column.add("shop_id");
 			column.add("payment_code");
+			column.add("created");
 			
 			customerID = txtCustomerID.getText();
 			uniqueID = UUID.randomUUID().toString();
@@ -857,6 +863,7 @@ public class AppUI extends JFrame implements ActionListener{
 			values.add("'" + customerID+"'");
 			values.add("'" +shopID+"'" );
 			values.add("'" +uniqueID+"'");
+			values.add("'"+timestamp+"'");
 			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
 				@Override
 				protected Void doInBackground() throws Exception {
