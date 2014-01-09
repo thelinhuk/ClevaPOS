@@ -28,7 +28,7 @@ public class Calculator {
 		}
 		return val;
 	}
-	public double deduct(ArrayList list){
+	public double deduct(){
 //		float val = 0;
 //		for(int i = 0; i < list.size(); i++)
 //		{

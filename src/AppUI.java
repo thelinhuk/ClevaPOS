@@ -84,7 +84,7 @@ public class AppUI extends JFrame implements ActionListener{
 	final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private JTextField txtCustomerID;
 	private ArrayList item;
-	private static ArrayList price;
+	private static ArrayList price, disVal;
 	static JLabel lblTotal;
 	static Calculator calculator;
 	static float total;
@@ -144,10 +144,9 @@ public class AppUI extends JFrame implements ActionListener{
 		itemID = new ArrayList();
 		itemName = new ArrayList();
 		calculator = new Calculator();
-		price = new ArrayList();
 		calculator = new Calculator();
 		//setUndecorated(true);
-		counter = 201;
+		counter = 0;
 		isSwitch = false;
 		isPaid = "";
 		total = 0;
@@ -809,27 +808,44 @@ public class AppUI extends JFrame implements ActionListener{
 				total = calculator.total(price);
 				lblTotal.setText("Total: £"+ total);
 				itemID.add(txtSearch.getText());
-
 				//System.out.println("added--- " + item.get(0));
 			}
 			txtSearch.setText("");
 		}else if(btnAction.getText().equals("Remove")){
-			if(table.getRowCount() >= 0){
+			int colIndex = table.getSelectedColumn();
+			int r = table.getSelectedRow();
+			float dis = 0;
 
+			
+			if(table.getRowCount() > 0 && colIndex >= 0){
 				removeSelectedRow(table);
-				total = calculator.total(price);
-				lblTotal.setText("Total: £"+ total);
-				
+				//System.out.println("OK");
+				total = calculator.total(price);				
+				//lblTotal.setText("Total: £"+ total);
+				for (int i = 0; i < table.getRowCount(); i++ ){
+					String n = (String) table.getModel().getValueAt(i, 0);
+					if (n.equals("Discount Amount")){
+						//dis = (float) table.getModel().getValueAt(i, 1);
+						float dd = Float.parseFloat((String) table.getModel().getValueAt(r, 1));
+						//total = total - dd;
+						//System.out.println(total);
+						//model.removeRow(i);
+					}
+					//lblTotal.setText("Total: £"+ total);
+					
+				}
+
+				lblTotal.setText("Total: £"+ (total));
 			}
+			
+			
 		}else if(btnAction.getText().equals("PAY")){
 			print(table);
 			column = new ArrayList();
 			values = new ArrayList();
 			InsertItem = new DBQuery("posadmin_pos","clevapos123");
 			InsertItem.setHost("jdbc:mysql://173.254.28.135:3306/posadmin_pos");
-			
-			
-			
+
 			column.add("items_id");
 			column.add("staff_id");
 			column.add("customer_id");
@@ -908,16 +924,15 @@ public class AppUI extends JFrame implements ActionListener{
 	
 	public static void setTotalAfterDiscount(float totalAfterDiscount){
 		//String newTotal = Float.toString(t);
-
 		totAfterDiscount = totalAfterDiscount;
 		String totalOriginal = lblTotal.getText();
 		totalOriginal = totalOriginal.replaceAll("[^0-9.]", "");
 		//System.out.println(price);
 		float totalOrig = Float.parseFloat(totalOriginal);
-		double discountAmount = totalOrig - totAfterDiscount;
-		
-		model.addRow(new Object[]{"Discount Amount",discountAmount});
-		//price.add(totalAfterDiscount);
+		//double discountAmount = totalOrig - totAfterDiscount;
+		total = totalOrig - totAfterDiscount;
+		model.addRow(new Object[]{"Discount Amount",total});
+		price.add(total);
 		total = totalAfterDiscount;
 		lblTotal.setText("Total: £" + total);
 	}
@@ -962,9 +977,10 @@ public class AppUI extends JFrame implements ActionListener{
 		for(int i=0;i< rows.length;i++){
 			model.removeRow(rows[i]-i);
 			price.remove(rows[i]-i);
-			if(!model.getValueAt(i, 0).toString().equals("Discounts")){
-					itemID.remove(rows[i]-i);		
-			}
+			//if(!model.getValueAt(i, 0).toString().equals("Discounts")){
+	
+				//	itemID.remove(rows[i]-i);		
+			//}
 		}
 	}
 
