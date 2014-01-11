@@ -106,7 +106,7 @@ public class Items extends JDialog implements ActionListener{
 			dbQuery = new DBQuery("root","root");
 			dbQuery.connectDB();
 			price = dbQuery.getPrice(getVal);
-			AppUI.setLabel(getVal,price.get(0));
+			AppUI.setLabel(getVal,price.get(0),price.get(1).toString());
 		}
 	}
 	

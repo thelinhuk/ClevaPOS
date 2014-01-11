@@ -91,6 +91,8 @@ class DBQuery{
 				//price.add(itm);
 				itm = rs.getString("price");
 				price.add(itm);
+				itm = rs.getString("code");
+				price.add(itm);
 			}
 		}catch(Exception e){
 			

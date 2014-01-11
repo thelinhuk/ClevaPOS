@@ -107,7 +107,7 @@
 		private Print printTransaction;
 		private static double discountAmount;
 	
-		private ArrayList itemID;
+		private static ArrayList itemID = new ArrayList();
 		private ArrayList itemName;
 		private ArrayList column;
 		private ArrayList values;
@@ -472,7 +472,7 @@
 			lblChange.setForeground(Color.WHITE);
 			lblChange.setFont(new Font("Tahoma", Font.BOLD, 24));
 			lblChange.setBackground(new Color(44, 91, 166));
-			lblChange.setBounds(116, 2, 84, 64);
+			lblChange.setBounds(98, 2, 133, 64);
 			panel_20.add(lblChange);
 			
 			JPanel panel_3 = new JPanel();
@@ -855,7 +855,15 @@
 						removeSelectedRow(table);
 						total = calculator.total(price);
 					}
+					for(int i =0;i < itemID.size();i++){
+						if(itemID.get(i).toString().equals("discount")){
+							itemID.remove(i);
+							
+						}
+						
+					}
 					lblTotal.setText("Total: £"+ (total));
+					
 				}
 				//test
 			}else if(btnAction.getText().equals("Pay")){
@@ -918,14 +926,10 @@
 						
 					};
 					
-					for(int i =0;i <itemID.size();i++){
-						System.out.println(itemID.get(i).toString());
-						
-						
-					}
+			
 					
 					
-					// worker.execute();
+					worker.execute();
 			}else if(btnAction.getText().equals("ENTER")){
 				
 				if(table.getRowCount() == 0){
@@ -961,6 +965,7 @@
 			total = totalOrig - totAfterDiscount;
 			model.addRow(new Object[]{"Discount Amount",(double)Math.round(total * 100) / 100});
 			price.add(total);
+			itemID.add("disccount");
 			total = totalAfterDiscount;
 			lblTotal.setText("Total: £" + (double)Math.round(total * 100) / 100);
 		}
@@ -1004,16 +1009,19 @@
 			for(int i=0;i< rows.length;i++){
 				model.removeRow(rows[i]-i);
 				price.remove(rows[i]-i);
-//				if(!model.getValueAt(i, 0).toString().equals("Discounts")){
-//						itemID.remove(rows[i]-i);		
-//				}
+				if(!model.getValueAt(i, 0).toString().equals("Discounts")){
+						itemID.remove(rows[i]-i);		
+				}
 			}
 		}
 	
-		public static void setLabel(String item, Object prc){
+		public static void setLabel(String item, Object prc,String id){
 			//lblItems.setText(setValue);
 				model.addRow(new Object[]{item,prc});
 				price.add(prc);
+				
+				itemID.add(id);
+			
 				total = calculator.total(price);
 				lblTotal.setText("Total: £"+ total);
 		}
