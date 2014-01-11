@@ -105,7 +105,7 @@
 		private Calendar now;
 		private JButton btnPay;
 		private Print printTransaction;
-		private static double discountAmount;
+		private static float discountPercentAmount;
 	
 		private static ArrayList itemID = new ArrayList();
 		private ArrayList itemName;
@@ -118,6 +118,7 @@
 		private int discount;
 		private float totalPrice; 
 		private String uniqueID;
+		private String discountType;
 		
 		/**
 		 * Launch the application.
@@ -941,7 +942,14 @@
 				}else{
 					customerPay = Float.valueOf(txtPaid.getText());
 					customerPay = calculator.getChange(table, customerPay);
-					System.out.println(discountAmount);
+					//String totalOriginal = lblTotal.getText();
+					//totalOriginal = totalOriginal.replaceAll("[^0-9.]", "");
+					//float totalOrig = Float.parseFloat(totalOriginal);
+					//discountAmount = totalOrig;
+					if (discountPercentAmount > 0){
+						discountType = "Percent";
+					System.out.println(discountType + ": " + discountPercentAmount);
+					}
 				
 					lblChange.setText("£"+customerPay+"");
 					btnPay.setEnabled(true);
@@ -963,6 +971,7 @@
 			totalOriginal = totalOriginal.replaceAll("[^0-9.]", "");
 			float totalOrig = Float.parseFloat(totalOriginal);
 			total = totalOrig - totAfterDiscount;
+			discountPercentAmount = total;
 			model.addRow(new Object[]{"Discount Amount",(double)Math.round(total * 100) / 100});
 			price.add(total);
 			itemID.add("disccount");
