@@ -829,10 +829,13 @@ public class AppUI extends JFrame implements ActionListener{
 			txtSearch.setText("");
 		}else if(btnAction.getText().equals("Remove")){
 <<<<<<< HEAD
+<<<<<<< HEAD
 			int colIndex = table.getSelectedColumn();
 			int r = table.getSelectedRow();
 			float dis = 0;
 =======
+=======
+>>>>>>> 94a4f06bc90a637955c75affa8d84b353d78cd94
 			String current_date = "";
 			if(table.getRowCount() >= 0){
 >>>>>>> 94a4f06bc90a637955c75affa8d84b353d78cd94
@@ -859,9 +862,13 @@ public class AppUI extends JFrame implements ActionListener{
 				lblTotal.setText("Total: £"+ (total));
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			
 			
 		}else if(btnAction.getText().equals("PAY")){
+=======
+		}else if(btnAction.getText().equals("Pay")){
+>>>>>>> 94a4f06bc90a637955c75affa8d84b353d78cd94
 =======
 		}else if(btnAction.getText().equals("Pay")){
 >>>>>>> 94a4f06bc90a637955c75affa8d84b353d78cd94
@@ -878,6 +885,9 @@ public class AppUI extends JFrame implements ActionListener{
 			java.util.Date date = new Date();
 			Timestamp timestamp = new Timestamp(date.getTime());
 			
+<<<<<<< HEAD
+>>>>>>> 94a4f06bc90a637955c75affa8d84b353d78cd94
+=======
 >>>>>>> 94a4f06bc90a637955c75affa8d84b353d78cd94
 			column.add("items_id");
 			column.add("staff_id");
