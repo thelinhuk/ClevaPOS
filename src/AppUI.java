@@ -318,6 +318,8 @@ public class AppUI extends JFrame implements ActionListener{
 		btnDiscount.setBackground(new Color(44, 91, 166));
 		btnDiscount.addActionListener(this);
 		
+		//test
+		
 		btnPay = new JButton("Pay");
 		btnPay.setEnabled(false);
 		btnPay.setBorder(new LineBorder(new Color(45, 50, 61), 2));
