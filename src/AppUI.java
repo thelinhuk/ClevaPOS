@@ -854,14 +854,14 @@
 					} else if(!aa.contains("Discount Amount") || nn.equals("Discount Amount") ) {
 						removeSelectedRow(table);
 						total = calculator.total(price);
-					}
-					for(int i =0;i < itemID.size();i++){
-						if(itemID.get(i).toString().equals("discount")){
-							itemID.remove(i);
+						for(int i =0;i < itemID.size();i++){
+							if(itemID.get(i).toString().equals("discount")){
+								itemID.remove(i);	
+							}
 							
 						}
-						
 					}
+			
 					lblTotal.setText("Total: £"+ (total));
 					
 				}
