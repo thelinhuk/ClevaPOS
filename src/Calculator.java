@@ -46,7 +46,7 @@ public class Calculator {
 		 DefaultTableModel model = (DefaultTableModel) table.getModel();
 	        for (int count = 0; count < model.getRowCount(); count++){
 	        	itemname = model.getValueAt(count, 0).toString();
-	        	if(itemname.equals("Discount")){
+	        	if(itemname.equals("Discount Amount")){
 	        		discountVal =  model.getValueAt(count, 1).toString();
 	        		discount = Float.valueOf(discountVal);
 	        		
