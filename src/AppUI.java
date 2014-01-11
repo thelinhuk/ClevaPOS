@@ -324,6 +324,7 @@ public class AppUI extends JFrame implements ActionListener{
 		
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		//test
 		
 		btnPay = new JButton("Pay");
@@ -332,6 +333,9 @@ public class AppUI extends JFrame implements ActionListener{
 		btnPay.setForeground(Color.WHITE);
 		btnPay.setFont(new Font("Tahoma", Font.BOLD, 24));
 		btnPay.setBackground(new Color(44, 91, 166));
+=======
+		btnPay = new JButton("PAY");
+>>>>>>> 973435561db20bdfc14b229bdd6d0062a2ba3903
 =======
 		btnPay = new JButton("PAY");
 >>>>>>> 973435561db20bdfc14b229bdd6d0062a2ba3903
