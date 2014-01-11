@@ -914,7 +914,14 @@ public class AppUI extends JFrame implements ActionListener{
 					
 				};
 				
-				worker.execute();
+				for(int i =0;i <itemID.size();i++){
+					System.out.println(itemID.get(i).toString());
+					
+					
+				}
+				
+				
+				// worker.execute();
 		}else if(btnAction.getText().equals("ENTER")){
 			
 			if(table.getRowCount() == 0){
@@ -1009,10 +1016,10 @@ public class AppUI extends JFrame implements ActionListener{
 
 	public static void setLabel(String item, Object prc){
 		//lblItems.setText(setValue);
-		model.addRow(new Object[]{item,prc});
-		price.add(prc);
-		total = calculator.total(price);
-		lblTotal.setText("Total: £"+ total);
-		}
+			model.addRow(new Object[]{item,prc});
+			price.add(prc);
+			total = calculator.total(price);
+			lblTotal.setText("Total: £"+ total);
+	}
 }
  
