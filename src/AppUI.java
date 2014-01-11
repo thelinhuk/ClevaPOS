@@ -265,7 +265,7 @@ public class AppUI extends JFrame implements ActionListener{
 		table.setShowGrid(false);
 		table.setShowHorizontalLines(false);
 		table.setShowVerticalLines(false);
-		table.setFont(new Font("Tahoma", Font.BOLD, 25));
+		table.setFont(new Font("Tahoma", Font.BOLD, 20));
 		table.setRowHeight(50);
 		scrollPane = new JScrollPane(table);
 		DefaultTableCellRenderer centerRender = new DefaultTableCellRenderer();
@@ -273,6 +273,7 @@ public class AppUI extends JFrame implements ActionListener{
 		model.addColumn("Item");
 		model.addColumn("Price");
 		table.getColumnModel().getColumn(1).setCellRenderer(centerRender);
+		table.getColumn("Item").setPreferredWidth(450);
 		
 		
 		panel_24.setLayout(new BorderLayout(0, 0));
