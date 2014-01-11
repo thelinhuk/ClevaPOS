@@ -86,7 +86,7 @@ public class AppUI extends JFrame implements ActionListener{
 	private JLabel lblDateTime;
 	final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private JTextField txtCustomerID;
-	private ArrayList item;
+	private ArrayList item,aa;
 	private static ArrayList price;
 	static JLabel lblTotal;
 	static Calculator calculator;
@@ -830,13 +830,23 @@ public class AppUI extends JFrame implements ActionListener{
 			}
 			txtSearch.setText("");
 		}else if(btnAction.getText().equals("Remove")){
-			String current_date = "";
-			if(table.getRowCount() >= 0){
+			int colIndex = table.getSelectedColumn();
+			int r = table.getSelectedRow();
+			 aa = new ArrayList();;
+			if(table.getRowCount() > 0 && colIndex >= 0){				
+				for (int i = 0; i < table.getRowCount(); i++ ){
+					String n = (String) table.getModel().getValueAt(i, 0);
+					aa.add(n);
+				}
+				String nn = (String) table.getModel().getValueAt(r, 0);
+				if (aa.contains("Discount Amount") && !nn.equals("Discount Amount")) {
 
-				removeSelectedRow(table);
-				total = calculator.total(price);
-				lblTotal.setText("Total: £"+ total);
-				
+				return;	
+				} else if(!aa.contains("Discount Amount") || nn.equals("Discount Amount") ) {
+					removeSelectedRow(table);
+					total = calculator.total(price);
+				}
+				lblTotal.setText("Total: £"+ (total));
 			}
 			//test
 		}else if(btnAction.getText().equals("Pay")){
