@@ -86,7 +86,7 @@
 		private JLabel lblDateTime;
 		final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		private JTextField txtCustomerID;
-		private ArrayList item,aa;
+		private ArrayList item,tableItems;
 		private static ArrayList price;
 		static JLabel lblTotal;
 		static Calculator calculator;
@@ -841,17 +841,17 @@
 			}else if(btnAction.getText().equals("Remove")){
 				int colIndex = table.getSelectedColumn();
 				int r = table.getSelectedRow();
-				 aa = new ArrayList();;
+				 tableItems = new ArrayList();
 				if(table.getRowCount() > 0 && colIndex >= 0){				
 					for (int i = 0; i < table.getRowCount(); i++ ){
-						String n = (String) table.getModel().getValueAt(i, 0);
-						aa.add(n);
+						String itemsAdded = (String) table.getModel().getValueAt(i, 0);
+						tableItems.add(itemsAdded);
 					}
-					String nn = (String) table.getModel().getValueAt(r, 0);
-					if (aa.contains("Discount Amount") && !nn.equals("Discount Amount")) {
+					String selectedItem = (String) table.getModel().getValueAt(r, 0);
+					if (tableItems.contains("Discount Amount") && !selectedItem.equals("Discount Amount")) {
 
 					return;	
-					} else if(!aa.contains("Discount Amount") || nn.equals("Discount Amount") ) {
+					} else if(!tableItems.contains("Discount Amount") || selectedItem.equals("Discount Amount") ) {
 						removeSelectedRow(table);
 						total = calculator.total(price);
 					}
@@ -939,7 +939,7 @@
 					customerPay = calculator.getChange(table, customerPay);
 					System.out.println(discountAmount);
 				
-					lblChange.setText("£ "+customerPay+"");
+					lblChange.setText("£"+customerPay+"");
 					btnPay.setEnabled(true);
 					
 				}		
@@ -951,11 +951,7 @@
 			String tot = lblTotal.getText();
 			return tot;	
 		}
-		
-	//	public static float getTotal(){
-	//	float tot = calculator.total(price);
-	//	return tot;	
-	//}
+
 		
 		public static void setTotalAfterDiscount(float totalAfterDiscount){
 			totAfterDiscount = totalAfterDiscount;
