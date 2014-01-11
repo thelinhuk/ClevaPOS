@@ -105,6 +105,7 @@ public class AppUI extends JFrame implements ActionListener{
 	private Calendar now;
 	private JButton btnPay;
 	private Print printTransaction;
+	private static double discountAmount;
 
 	private ArrayList itemID;
 	private ArrayList itemName;
@@ -782,30 +783,35 @@ public class AppUI extends JFrame implements ActionListener{
 		if(isSwitch && btnAction.getText().equals("Login")){
 			//String srch = txtUserID.getText();
 			staffID = txtUserID.getText();
-			btnLogin.setEnabled(false);
-			txtUserID.setEnabled(false);
-			dbQuery = new DBQuery("root","root");
-			dbQuery.connectDB();
-			if(dbQuery.isLogin(staffID)){	   			
-				btnFind.setEnabled(true);
-    			btnDelete.setEnabled(true);
-    			btnClear.setEnabled(true);
-    			btnDot.setEnabled(true);
-    			btnFivePnd.setEnabled(true);
-    			btnTenPnd.setEnabled(true);
-    			btnTwentyPnd.setEnabled(true);
-    			btnFiftyPnd.setEnabled(true);
-    			btnEnter.setEnabled(true);
-    			
-    			btnRemove.setEnabled(true);
-    			btnListItems.setEnabled(true);
-    			btnRemove.setEnabled(true);
-    			btnDiscount.setEnabled(true);
-    			btnLogout.setEnabled(true);
-				counter = 0;
-				isSwitch = false;
-			}
+		
+			if(!staffID.equals("")){
+				dbQuery = new DBQuery("root","root");
+				dbQuery.connectDB();
+				if(dbQuery.isLogin(staffID)){
+					btnLogin.setEnabled(false);
+					txtUserID.setEnabled(false);
+					btnFind.setEnabled(true);
+	    			btnDelete.setEnabled(true);
+	    			btnClear.setEnabled(true);
+	    			btnDot.setEnabled(true);
+	    			btnFivePnd.setEnabled(true);
+	    			btnTenPnd.setEnabled(true);
+	    			btnTwentyPnd.setEnabled(true);
+	    			btnFiftyPnd.setEnabled(true);
+	    			btnEnter.setEnabled(true);
+	    			
+	    			btnRemove.setEnabled(true);
+	    			btnListItems.setEnabled(true);
+	    			btnRemove.setEnabled(true);
+	    			btnDiscount.setEnabled(true);
+	    			btnLogout.setEnabled(true);
+					counter = 0;
+					isSwitch = false;
+				}
 
+				
+			}
+			
 			
 		}else if(btnAction.getText().equals("Logout")){
 				counter = 200;
@@ -921,6 +927,8 @@ public class AppUI extends JFrame implements ActionListener{
 			}else{
 				customerPay = Float.valueOf(txtPaid.getText());
 				customerPay = calculator.getChange(table, customerPay);
+				System.out.println(discountAmount);
+			
 				lblChange.setText("£ "+customerPay+"");
 				btnPay.setEnabled(true);
 				
@@ -947,7 +955,7 @@ public class AppUI extends JFrame implements ActionListener{
 		totalOriginal = totalOriginal.replaceAll("[^0-9.]", "");
 		//System.out.println(price);
 		float totalOrig = Float.parseFloat(totalOriginal);
-		double discountAmount = totalOrig - totAfterDiscount;
+		discountAmount = totalOrig - totAfterDiscount;
 		
 		model.addRow(new Object[]{"Discount Amount",discountAmount});
 		//price.add(totalAfterDiscount);
@@ -958,7 +966,7 @@ public class AppUI extends JFrame implements ActionListener{
 	public void print(JTable table){
 		 	ArrayList<String> itemname = new ArrayList<String>();
 		 	ArrayList<String> itemprice = new ArrayList<String>();
-		 	printTransaction = new Print();
+		 	printTransaction = new Print();	
 			String usrID = "";
 	 		String itm = "";
 		 	String itp = "";
