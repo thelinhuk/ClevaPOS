@@ -849,6 +849,7 @@
 					}
 					String nn = (String) table.getModel().getValueAt(r, 0);
 					if (aa.contains("Discount Amount") && !nn.equals("Discount Amount")) {
+
 					return;	
 					} else if(!aa.contains("Discount Amount") || nn.equals("Discount Amount") ) {
 						removeSelectedRow(table);
@@ -957,19 +958,15 @@
 	//}
 		
 		public static void setTotalAfterDiscount(float totalAfterDiscount){
-			//String newTotal = Float.toString(t);
-	
 			totAfterDiscount = totalAfterDiscount;
 			String totalOriginal = lblTotal.getText();
 			totalOriginal = totalOriginal.replaceAll("[^0-9.]", "");
-			//System.out.println(price);
 			float totalOrig = Float.parseFloat(totalOriginal);
-			discountAmount = totalOrig - totAfterDiscount;
-			
-			model.addRow(new Object[]{"Discount Amount",discountAmount});
-			//price.add(totalAfterDiscount);
+			total = totalOrig - totAfterDiscount;
+			model.addRow(new Object[]{"Discount Amount",(double)Math.round(total * 100) / 100});
+			price.add(total);
 			total = totalAfterDiscount;
-			lblTotal.setText("Total: £" + total);
+			lblTotal.setText("Total: £" + (double)Math.round(total * 100) / 100);
 		}
 		
 		public void print(JTable table){
@@ -1011,9 +1008,9 @@
 			for(int i=0;i< rows.length;i++){
 				model.removeRow(rows[i]-i);
 				price.remove(rows[i]-i);
-				if(!model.getValueAt(i, 0).toString().equals("Discounts")){
-						itemID.remove(rows[i]-i);		
-				}
+//				if(!model.getValueAt(i, 0).toString().equals("Discounts")){
+//						itemID.remove(rows[i]-i);		
+//				}
 			}
 		}
 	
