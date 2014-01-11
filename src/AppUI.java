@@ -846,7 +846,6 @@ public class AppUI extends JFrame implements ActionListener{
 				}
 				String nn = (String) table.getModel().getValueAt(r, 0);
 				if (aa.contains("Discount Amount") && !nn.equals("Discount Amount")) {
-
 				return;	
 				} else if(!aa.contains("Discount Amount") || nn.equals("Discount Amount") ) {
 					removeSelectedRow(table);
