@@ -936,7 +936,12 @@ public class AppUI extends JFrame implements ActionListener{
 				customerPay = Float.valueOf(txtPaid.getText());
 				customerPay = calculator.getChange(table, customerPay);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				//System.out.println(customerPay);
+=======
+				System.out.println(discountAmount);
+			
+>>>>>>> 1b105eb9f3d8c919fc0caf1d737fbac0ffd42004
 =======
 				System.out.println(discountAmount);
 			
