@@ -892,6 +892,11 @@
 				values.add("'" +shopID+"'" );
 				values.add("'" +uniqueID+"'");
 				values.add("'"+timestamp+"'");
+				for(int i =0;i < itemID.size();i++){
+					if(itemID.get(i).toString().equals("discount")){
+						itemID.remove(i);	
+					}
+				}
 				SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
 					@Override
 					protected Void doInBackground() throws Exception {
@@ -1019,9 +1024,7 @@
 			//lblItems.setText(setValue);
 				model.addRow(new Object[]{item,prc});
 				price.add(prc);
-				
 				itemID.add(id);
-			
 				total = calculator.total(price);
 				lblTotal.setText("Total: £"+ total);
 		}
