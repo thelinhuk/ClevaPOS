@@ -18,6 +18,7 @@ import java.awt.Font;
 public class Discount extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
+	private static Calculator calculator;
 
 	/**
 	 * Launch the application.
@@ -36,6 +37,8 @@ public class Discount extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public Discount() {
+		
+		calculator = new Calculator();
 		setBounds(683, 140, 683, 221);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,6 +61,7 @@ public class Discount extends JDialog implements ActionListener {
 			btnGroupon.setForeground(Color.WHITE);
 			btnGroupon.setBackground(new Color(27, 188, 155));
 			btnGroupon.setBorder(new LineBorder(new Color(45, 50, 61), 2));
+			btnGroupon.addActionListener(this);
 			contentPanel.add(btnGroupon);
 		}
 		
@@ -84,6 +88,13 @@ public class Discount extends JDialog implements ActionListener {
 				this.dispose();
 				PercentDiscount pc = new PercentDiscount();
 				pc.setVisible(true);
+			}else if (btnAction.getText().equals("Groupon")){
+				//this.setVisible(false);
+				float discountAmount = 20;
+				float totalAfterDiscount = calculator.getDiscountGroupon(discountAmount);
+				AppUI.setTotalAfterDiscountGroupon(totalAfterDiscount);
+				this.dispose();
+				this.dispose();
 			}
 		}
 	}

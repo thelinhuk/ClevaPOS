@@ -78,5 +78,19 @@ public class Calculator {
 		return totalAfterDiscount;
 		
 	}
+	public float getDiscountGroupon(float discountAmount){
+
+		String tot = AppUI.getTotal();
+		if (tot != "")
+		{
+			tot = tot.replaceAll("[^0-9.]", "");
+			float total = Float.parseFloat(tot);
+			
+			totalAfterDiscount = ((total / 100) * discountAmount);
+			totalAfterDiscount = total - totalAfterDiscount;
+		}
+		return totalAfterDiscount;
+		
+	}
 	
 }

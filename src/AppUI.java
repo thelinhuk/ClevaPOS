@@ -93,7 +93,7 @@
 		static float total;
 		private JButton btnRemove;
 		private TextPrompt tp;
-		private static float totAfterDiscount;
+		private static float totAfterDiscount, totAfterDiscountGo ;
 		private static int p = 30;
 		private JButton btnDiscount;
 		private JTextField txtUserID;
@@ -105,7 +105,8 @@
 		private Calendar now;
 		private JButton btnPay;
 		private Print printTransaction;
-		private static double discountAmount;
+		private static float discountPercentAmount;
+		private static float discountGrouponAmount;
 	
 		private static ArrayList itemID = new ArrayList();
 		private ArrayList itemName;
@@ -118,6 +119,7 @@
 		private int discount;
 		private float totalPrice; 
 		private String uniqueID;
+		private String discountType;
 		
 		/**
 		 * Launch the application.
@@ -714,6 +716,7 @@
 		        			btnDiscount.setEnabled(false);
 		        			btnLogout.setEnabled(false);
 		        			btnPay.setEnabled(false);
+		        			btnLogin.setEnabled(true);
 		        			
 		        			counter = 0;
 		        			
@@ -946,7 +949,19 @@
 				}else{
 					customerPay = Float.valueOf(txtPaid.getText());
 					customerPay = calculator.getChange(table, customerPay);
-					System.out.println(discountAmount);
+					//String totalOriginal = lblTotal.getText();
+					//totalOriginal = totalOriginal.replaceAll("[^0-9.]", "");
+					//float totalOrig = Float.parseFloat(totalOriginal);
+					//discountAmount = totalOrig;
+					if (discountPercentAmount > 0){
+						discountType = "Percent";
+					System.out.println(discountType + ": " + discountPercentAmount);
+					}
+					else if (discountGrouponAmount > 0){
+						discountType = "Groupon";
+						System.out.println(discountType + ": " + discountGrouponAmount);
+
+					}
 				
 					lblChange.setText("£"+customerPay+"");
 					btnPay.setEnabled(true);
@@ -968,10 +983,25 @@
 			totalOriginal = totalOriginal.replaceAll("[^0-9.]", "");
 			float totalOrig = Float.parseFloat(totalOriginal);
 			total = totalOrig - totAfterDiscount;
+			discountPercentAmount = total;
 			model.addRow(new Object[]{"Discount Amount",(double)Math.round(total * 100) / 100});
 			price.add(total);
 			itemID.add("disccount");
 			total = totalAfterDiscount;
+			lblTotal.setText("Total: £" + (double)Math.round(total * 100) / 100);
+		}
+		
+		public static void setTotalAfterDiscountGroupon(float totalAfterDiscountGo){
+			totAfterDiscountGo = totalAfterDiscountGo;
+			String totalOriginal = lblTotal.getText();
+			totalOriginal = totalOriginal.replaceAll("[^0-9.]", "");
+			float totalOrig = Float.parseFloat(totalOriginal);
+			total = totalOrig - totAfterDiscountGo;
+			discountGrouponAmount = total;
+			model.addRow(new Object[]{"Discount Amount",(double)Math.round(total * 100) / 100});
+			price.add(total);
+			itemID.add("disccount");
+			total = totalAfterDiscountGo;
 			lblTotal.setText("Total: £" + (double)Math.round(total * 100) / 100);
 		}
 		
@@ -1006,7 +1036,7 @@
 				
 				change = Integer.parseInt(paid) - total;
 			         
-				printTransaction.printReceipt(brand, tel, address, change+"", paid, totalPrice+"", itemname, itemprice, dateFormat.format(now.getTime()).toString(),"");
+				printTransaction.printReceipt(brand, tel, address, change+"", paid, totalPrice+"", itemname, itemprice, dateFormat.format(now.getTime()).toString(),uniqueID);
 		}
 		public void removeSelectedRow(JTable table){
 			DefaultTableModel model = (DefaultTableModel) this.table.getModel();
