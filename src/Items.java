@@ -81,7 +81,7 @@ public class Items extends JDialog implements ActionListener{
 		btn = new JButton[items.size()];
 		for(int j = 0; j < btn.length; j++){
 			btn[j] = new JButton(); 
-			btn[j].setText((String) items.get(j));
+			btn[j].setText("<html><center>" + "<br>" + (String) items.get(j)  + "<br>" + " <br>" + "</center></html>");
 			btn[j].setBounds(0, 0, 160, 175);
 			btn[j].setForeground(Color.WHITE);
 			btn[j].setFont(new Font("Tahoma", Font.BOLD, 28));

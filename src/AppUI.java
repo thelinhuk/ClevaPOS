@@ -929,9 +929,6 @@
 						
 					};
 					
-			
-					
-					
 					worker.execute();
 			}else if(btnAction.getText().equals("ENTER")){
 				
@@ -944,10 +941,6 @@
 				}else{
 					customerPay = Float.valueOf(txtPaid.getText());
 					customerPay = calculator.getChange(table, customerPay);
-					//String totalOriginal = lblTotal.getText();
-					//totalOriginal = totalOriginal.replaceAll("[^0-9.]", "");
-					//float totalOrig = Float.parseFloat(totalOriginal);
-					//discountAmount = totalOrig;
 					if (discountPercentAmount > 0){
 						discountType = "Percent";
 					System.out.println(discountType + ": " + discountPercentAmount);
@@ -1039,9 +1032,9 @@
 			for(int i=0;i< rows.length;i++){
 				model.removeRow(rows[i]-i);
 				price.remove(rows[i]-i);
-				if(!model.getValueAt(i, 0).toString().equals("Discounts")){
-						itemID.remove(rows[i]-i);		
-				}
+//				if(!model.getValueAt(i, 0).toString().equals("Discounts")){
+//						itemID.remove(rows[i]-i);		
+//				}
 			}
 		}
 	
