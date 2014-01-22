@@ -880,7 +880,7 @@
 				lblChange.setText("0.0");
 				txtPaid.setText("0.0");
 				lblTotal.setText("Total: £ 0.00");
-				
+				btnPay.setEnabled(false);
 				
 				java.util.Date date = new Date();
 				Timestamp timestamp = new Timestamp(date.getTime());
@@ -909,7 +909,10 @@
 					@Override
 					protected Void doInBackground() throws Exception {
 										// TODO Auto-generated method stub
-							String query;
+							String query ="";
+							java.util.Date date = new Date();
+							Timestamp tp = new Timestamp(date.getTime());
+							
 							InsertItem = new DBQuery("posadmin_pos","clevapos123");
 							InsertItem.setHost("jdbc:mysql://173.254.28.135:3306/posadmin_pos");
 							InsertItem.connectDB();
@@ -926,10 +929,21 @@
 							
 							column.add("payment_code");
 							column.add("discount_val");
+							column.add("discount_type");
 							column.add("total");
+							column.add("created");
+							column.add("shop_id");
+							
+							
+							
 							values.add("'"+uniqueID+"'");
 							values.add("'"+discount+"'");
+							values.add("'"+discountType+"'");
 							values.add("'"+total+"'");
+							values.add("'"+tp+"'");
+							values.add("'" +shopID+"'" );
+
+							
 							query = InsertItem.buildInsertQuery("payment", column, values);
 							InsertItem.insertTransaction(query);
 						
