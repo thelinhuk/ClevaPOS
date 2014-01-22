@@ -116,7 +116,7 @@
 		private String shopID;
 		private String customerID;
 		private DBQuery InsertItem;
-		private int discount;
+		private static double discount;
 		private float totalPrice; 
 		private String uniqueID;
 		private String discountType;
@@ -986,8 +986,9 @@
 			total = totalOrig - totAfterDiscount;
 			discountPercentAmount = total;
 			model.addRow(new Object[]{"Discount Amount",(double)Math.round(total * 100) / 100});
+			discount = (double)Math.round(total * 100) / 100;
 			price.add(total);
-			itemID.add("disccount");
+			itemID.add("discount");
 			total = totalAfterDiscount;
 			lblTotal.setText("Total: £" + (double)Math.round(total * 100) / 100);
 		}
@@ -1000,6 +1001,8 @@
 			total = totalOrig - totAfterDiscountGo;
 			discountGrouponAmount = total;
 			model.addRow(new Object[]{"Discount Amount",(double)Math.round(total * 100) / 100});
+			discount = (double)Math.round(total * 100) / 100;
+
 			price.add(total);
 			itemID.add("disccount");
 			total = totalAfterDiscountGo;
