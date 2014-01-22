@@ -1080,9 +1080,9 @@
 			for(int i=0;i< rows.length;i++){
 				model.removeRow(rows[i]-i);
 				price.remove(rows[i]-i);
-//				if(!model.getValueAt(i, 0).toString().equals("Discounts")){
-//						itemID.remove(rows[i]-i);		
-//				}
+				if(!model.getValueAt(i, 0).toString().equals("Discounts")){
+						itemID.remove(rows[i]-i);		
+				}
 			}
 		}
 	
