@@ -474,7 +474,7 @@
 			lblChange.setForeground(Color.WHITE);
 			lblChange.setFont(new Font("Tahoma", Font.BOLD, 24));
 			lblChange.setBackground(new Color(44, 91, 166));
-			lblChange.setBounds(98, 2, 133, 64);
+			lblChange.setBounds(98, 2, 184, 64);
 			panel_20.add(lblChange);
 			
 			JPanel panel_3 = new JPanel();
@@ -870,13 +870,18 @@
 				}
 				//test
 			}else if(btnAction.getText().equals("Pay")){
-				print(table);
 				column = new ArrayList();
 				values = new ArrayList();
-				InsertItem = new DBQuery("posadmin_pos","clevapos123");
-				InsertItem.setHost("jdbc:mysql://173.254.28.135:3306/posadmin_pos");
+	
+				//Clear data on table
+				DefaultTableModel dm = (DefaultTableModel)table.getModel();
+				dm.getDataVector().removeAllElements();
+				dm.fireTableDataChanged();
+				lblChange.setText("0.0");
+				txtPaid.setText("0.0");
+				lblTotal.setText("Total: £ 0.00");
 				
-		
+				
 				java.util.Date date = new Date();
 				Timestamp timestamp = new Timestamp(date.getTime());
 				
@@ -905,6 +910,8 @@
 					protected Void doInBackground() throws Exception {
 										// TODO Auto-generated method stub
 							String query;
+							InsertItem = new DBQuery("posadmin_pos","clevapos123");
+							InsertItem.setHost("jdbc:mysql://173.254.28.135:3306/posadmin_pos");
 							InsertItem.connectDB();
 				 					
 							for(int i =0;i < itemID.size();i++){
@@ -916,6 +923,7 @@
 							}
 							column.clear();
 							values.clear();
+							
 							column.add("payment_code");
 							column.add("discount_val");
 							column.add("total");
@@ -930,6 +938,8 @@
 			
 					protected void done(){
 						InsertItem.closeConnection();
+						//print(table);
+
 					}
 						
 					};
@@ -948,11 +958,9 @@
 					customerPay = calculator.getChange(table, customerPay);
 					if (discountPercentAmount > 0){
 						discountType = "Percent";
-					System.out.println(discountType + ": " + discountPercentAmount);
 					}
 					else if (discountGrouponAmount > 0){
 						discountType = "Groupon";
-						System.out.println(discountType + ": " + discountGrouponAmount);
 
 					}
 				
