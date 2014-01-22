@@ -81,6 +81,7 @@ public class Items extends JDialog implements ActionListener{
 		btn = new JButton[items.size()];
 		for(int j = 0; j < btn.length; j++){
 			btn[j] = new JButton(); 
+			//sett button text using html tags to format it
 			btn[j].setText("<html><center>" + "<br>" + (String) items.get(j)  + "<br>" + " <br>" + "</center></html>");
 			btn[j].setBounds(0, 0, 160, 175);
 			btn[j].setForeground(Color.WHITE);
@@ -103,6 +104,8 @@ public class Items extends JDialog implements ActionListener{
 		}
 		else {
 			getVal = btnAction.getText();
+			//remove html tags
+			getVal = getVal.replaceAll("\\<.*?>","");
 			dbQuery = new DBQuery("root","root");
 			dbQuery.connectDB();
 			price = dbQuery.getPrice(getVal);

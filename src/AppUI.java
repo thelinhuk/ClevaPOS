@@ -827,20 +827,20 @@
 					
 			}else if(btnAction.getText().equals( "Add")){
 				
-				dbQuery = new DBQuery("root","root");
-				dbQuery.connectDB();
-				item = dbQuery.getItem(txtSearch.getText());
-				
-				if(item.size() > 0){
-					model.addRow(new Object[]{item.get(0),item.get(1)});
-					price.add(item.get(1));
-					total = calculator.total(price);
-					lblTotal.setText("Total: £"+ total);
-					itemID.add(txtSearch.getText());
-	
-			 		//System.out.println("added--- " + item.get(0));
-				}
-				txtSearch.setText("");
+//				dbQuery = new DBQuery("root","root");
+//				dbQuery.connectDB();
+//				item = dbQuery.getItem(txtSearch.getText());
+//				
+//				if(item.size() > 0){
+//					model.addRow(new Object[]{item.get(0),item.get(1)});
+//					price.add(item.get(1));
+//					total = calculator.total(price);
+//					lblTotal.setText("Total: £"+ total);
+//					itemID.add(txtSearch.getText());
+//	
+//			 		//System.out.println("added--- " + item.get(0));
+//				}
+//				txtSearch.setText("");
 			}else if(btnAction.getText().equals("Remove")){
 				int colIndex = table.getSelectedColumn();
 				int r = table.getSelectedRow();
@@ -937,29 +937,49 @@
 					worker.execute();
 			}else if(btnAction.getText().equals("ENTER")){
 				
-				if(table.getRowCount() == 0){
-					JOptionPane.showMessageDialog(null, "There are no items added, Please add Item");
+				if (!txtSearch.getText().equals("")){
 					
-				}else if(txtPaid.getText().equals("") || txtPaid.getText().equals("0.00")|| txtPaid.getText().equals("0")){
-					JOptionPane.showMessageDialog(null, "Please enter amount customer has paid");
-	
-				}else{
-					customerPay = Float.valueOf(txtPaid.getText());
-					customerPay = calculator.getChange(table, customerPay);
-					if (discountPercentAmount > 0){
-						discountType = "Percent";
-					System.out.println(discountType + ": " + discountPercentAmount);
+					dbQuery = new DBQuery("root","root");
+					dbQuery.connectDB();
+					item = dbQuery.getItem(txtSearch.getText());
+					
+					if(item.size() > 0){
+						model.addRow(new Object[]{item.get(0),item.get(1)});
+						price.add(item.get(1));
+						total = calculator.total(price);
+						lblTotal.setText("Total: £"+ total);
+						itemID.add(txtSearch.getText());
 					}
-					else if (discountGrouponAmount > 0){
-						discountType = "Groupon";
-						System.out.println(discountType + ": " + discountGrouponAmount);
-
+					txtSearch.setText("");
+					//return;
+				}
+				
+				else{
+					if(table.getRowCount() == 0){
+						JOptionPane.showMessageDialog(null, "There are no items added, Please add Item");
+						
+					}else if(txtPaid.getText().equals("") || txtPaid.getText().equals("0.00")|| txtPaid.getText().equals("0")){
+						JOptionPane.showMessageDialog(null, "Please enter amount customer has paid");
+		
+					}else{
+						customerPay = Float.valueOf(txtPaid.getText());
+						customerPay = calculator.getChange(table, customerPay);
+						if (discountPercentAmount > 0){
+							discountType = "Percent";
+						System.out.println(discountType + ": " + discountPercentAmount);
+						}
+						else if (discountGrouponAmount > 0){
+							discountType = "Groupon";
+							System.out.println(discountType + ": " + discountGrouponAmount);
+	
+						}
+					
+						lblChange.setText("£"+customerPay+"");
+						btnPay.setEnabled(true);
+						
 					}
 				
-					lblChange.setText("£"+customerPay+"");
-					btnPay.setEnabled(true);
-					
-				}		
+				}
 			}
 			
 		}
