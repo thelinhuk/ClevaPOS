@@ -1,68 +1,102 @@
-	import java.awt.BorderLayout;
-	import java.awt.Dimension;
-	import java.awt.EventQueue;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
 	
-	import javax.swing.JFrame;
-	import javax.swing.JPanel;
-	import javax.swing.border.Border;
-	import javax.swing.border.EmptyBorder;
+
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 	
-	import java.awt.GridLayout;
+
+
+import java.awt.GridLayout;
 	
-	import javax.swing.JButton;
-	import javax.swing.ImageIcon;
+
+
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 	
-	import java.awt.FlowLayout;
-	import java.awt.event.ActionListener;
-	import java.awt.event.ActionEvent;
-	import java.awt.event.MouseEvent;
-	import java.awt.event.MouseListener;
+
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 	
-	import javax.swing.SwingConstants;
+
+
+import javax.swing.SwingConstants;
 	
-	import java.awt.GridBagLayout;
-	import java.awt.GridBagConstraints;
-	import java.awt.Insets;
+
+
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 	
-	import javax.swing.BorderFactory;
-	import javax.swing.BoxLayout;
-	import javax.swing.ButtonModel;
-	import javax.swing.JLabel;
-	import javax.swing.JOptionPane;
-	import javax.swing.JScrollPane;
-	import javax.swing.JTextField;
-	import javax.swing.SwingWorker;
-	import javax.swing.border.CompoundBorder;
+
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonModel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingWorker;
+import javax.swing.border.CompoundBorder;
 	
-	import java.awt.Color;
-	import java.awt.Font;
+
+
+import java.awt.Color;
+import java.awt.Font;
 	
-	import javax.swing.UIManager;
-	import javax.swing.border.LineBorder;
-	import javax.swing.event.ChangeEvent;
-	import javax.swing.event.ChangeListener;
-	import javax.swing.JTabbedPane;
+
+
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.JTabbedPane;
 	
-	import java.awt.event.FocusEvent;
-	import java.awt.event.FocusListener;
+
+
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 	
-	import javax.swing.JList;
-	import javax.swing.JTable;
-	import javax.swing.table.DefaultTableCellRenderer;
-	import javax.swing.table.DefaultTableModel;
+
+
+import javax.swing.JList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 	
-	import java.sql.Time;
-	import java.sql.Timestamp;
-	import java.text.DateFormat;
-	import java.text.SimpleDateFormat;
-	import java.util.*;
-	import java.awt.SystemColor;
+
+
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.awt.SystemColor;
+	
+import org.freixas.jcalendar.DateEvent;
+import org.freixas.jcalendar.DateListener;
+import org.freixas.jcalendar.JCalendar;
+import org.freixas.jcalendar.JCalendarCombo;
+import javax.swing.ListSelectionModel;
+import java.awt.Choice;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.AbstractListModel;
 	//import jpos.*;
 	
 	
 	
 	
-	public class AppUI extends JFrame implements ActionListener{
+	public class AppUI extends JFrame implements ActionListener, DateListener{
 	
 		private JPanel contentPane;
 		private JTextField txtSearch;
@@ -91,7 +125,8 @@
 		static JLabel lblTotal;
 		static Calculator calculator;
 		static float total;
-		private JButton btnRemove;
+		private JButton btnRemove,btnResetDate;
+		
 		private TextPrompt tp;
 		private static float totAfterDiscount, totAfterDiscountGo ;
 		private static int p = 30;
@@ -120,6 +155,20 @@
 		private float totalPrice; 
 		private String uniqueID;
 		private String discountType;
+		private JTextField txtDate;
+		private JCalendar calendar;
+		private JList list,list_1;
+		private JPanel panel_26;
+		private JPanel panel_27;
+		private JPanel panel_29;
+		private JPanel panel_30;
+		private JPanel panel_31;
+		private JList list_2;
+		private JLabel lblNewLabel_1;
+		private JPanel panel_34;
+		private JList list_3;
+		private JLabel lblNewLabel_2;
+		private JPanel panel_35;
 		
 		/**
 		 * Launch the application.
@@ -152,13 +201,13 @@
 			calculator = new Calculator();
 			price = new ArrayList();
 			calculator = new Calculator();
-			//setUndecorated(true);
+			setUndecorated(true);
 			counter = 201;
 			isSwitch = false;
 			isPaid = "";
 			total = 0;
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(0, 0, 1366, 768);
+			setBounds(0, 0, 1440, 900);
 			contentPane = new JPanel();
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			contentPane.setBackground(new Color(45, 50, 61));
@@ -696,6 +745,137 @@
 			
 			JPanel panel_21 = new JPanel();
 			tabbedPane.addTab("New tab", null, panel_21, null);
+			panel_21.setLayout(null);
+			
+		    calendar = new JCalendar();
+		    calendar.setDayOfWeekFont(new Font("Dialog", Font.BOLD, 12));
+		    calendar.setBorder(null);
+			calendar.setBackground(Color.WHITE);
+			calendar.addDateListener(this);
+			calendar.setBounds(10, 8, 457, 290);
+			panel_21.add(calendar);
+			
+			txtDate = new JTextField();
+			txtDate.setBounds(475, 297, 303, 34);
+			panel_21.add(txtDate);
+			txtDate.setColumns(10);
+			
+			btnResetDate = new JButton("Reset Date");
+			
+			btnResetDate.setBounds(475, 8, 109, 34);
+			btnResetDate.addActionListener(this);
+			
+			panel_21.add(btnResetDate);
+			
+			String	listData[] =
+				{
+					"Item 1 sdd dddddd ddddddd dddd ddddddddddd dddddddddddd ddddd dddd ddddfds",
+					"Item 2", 
+					"Item 3",
+					"Item 4"
+				};
+			
+			JPanel panel_25 = new JPanel();
+			panel_25.setBounds(10, 302, 221, 532);
+			panel_21.add(panel_25);
+			panel_25.setLayout(null);
+			
+			JPanel panel_33 = new JPanel();
+			panel_33.setBounds(-1, 1, 225, 133);
+			panel_25.add(panel_33);
+			panel_33.setLayout(null);
+			
+			list = new JList(listData);
+			list.setBounds(0, 17, 220, 114);
+			panel_33.add(list);
+			list.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			list.setBackground(Color.WHITE);
+			list.setListData(listData);
+			
+			JLabel lblNewLabel = new JLabel("9.00");
+			lblNewLabel.setBounds(1, 0, 222, 16);
+			panel_33.add(lblNewLabel);
+			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+			
+			panel_31 = new JPanel();
+			panel_31.setBounds(0, 134, 221, 132);
+			panel_25.add(panel_31);
+			panel_31.setLayout(null);
+			
+			list_2 = new JList(listData);
+			list_2.setBounds(-1, 20, 225, 114);
+			panel_31.add(list_2);
+			
+			lblNewLabel_1 = new JLabel("9.15");
+			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblNewLabel_1.setBounds(1, 1, 224, 16);
+			panel_31.add(lblNewLabel_1);
+			
+			panel_34 = new JPanel();
+			panel_34.setBounds(-1, 265, 220, 132);
+			panel_25.add(panel_34);
+			panel_34.setLayout(null);
+			list_3 = new JList(listData);
+			list_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			list_3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			list_3.setListData(listData);
+			list_3.setBounds(0, 17, 219, 114);
+			panel_34.add(list_3);
+			
+			lblNewLabel_2 = new JLabel("9.30");
+			lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblNewLabel_2.setBounds(2, -1, 225, 16);
+			panel_34.add(lblNewLabel_2);
+			
+			panel_35 = new JPanel();
+			panel_35.setBounds(0, 397, 220, 131);
+			panel_25.add(panel_35);
+			panel_35.setLayout(null);
+			
+			JList list_4 = new JList();
+			list_4.setBounds(1, 18, 218, 114);
+			list_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			list_4.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			list_4.setListData(listData);
+			panel_35.add(list_4);
+			
+			JLabel lblNewLabel_3 = new JLabel("9.45");
+			lblNewLabel_3.setBounds(1, 0, 217, 16);
+			panel_35.add(lblNewLabel_3);
+			lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+			
+			
+			panel_26 = new JPanel();
+			panel_26.setBounds(239, 343, 235, 447);
+			panel_21.add(panel_26);
+			
+			list_1 = new JList(listData);
+			panel_26.add(list_1);
+			list_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			list_1.setBackground(Color.WHITE);
+			list_1.setListData(listData);
+			list_1.setPreferredSize(new Dimension(200,200));
+			
+			panel_27 = new JPanel();
+			panel_27.setBounds(485, 342, 235, 445);
+			panel_21.add(panel_27);
+			
+			panel_29 = new JPanel();
+			panel_29.setBounds(714, 346, 235, 445);
+			panel_21.add(panel_29);
+			
+			panel_30 = new JPanel();
+			panel_30.setBounds(952, 346, 235, 445);
+			panel_21.add(panel_30);
+			
+			JPanel panel_32 = new JPanel();
+			panel_32.setBounds(481, 55, 298, 225);
+			panel_21.add(panel_32);
+						
+			JTabbedPane tabbedPane_3 = new JTabbedPane(JTabbedPane.TOP);
+			panel_32.add(tabbedPane_3);
 			Border emptyBorder = BorderFactory.createEmptyBorder();
 		    javax.swing.Timer timer = new javax.swing.Timer(TIMER_DELAY, new ActionListener() {
 		        public void actionPerformed(ActionEvent arg0) {
@@ -746,6 +926,7 @@
 			KeyPad keypad;
 			Categories cats;
 			JButton btnAction = (JButton)e.getSource();
+		
 			
 			float customerPay = 0;
 			if(btnAction.getText().equals("List Items")){
@@ -827,20 +1008,20 @@
 					
 			}else if(btnAction.getText().equals( "Add")){
 				
-//				dbQuery = new DBQuery("root","root");
-//				dbQuery.connectDB();
-//				item = dbQuery.getItem(txtSearch.getText());
-//				
-//				if(item.size() > 0){
-//					model.addRow(new Object[]{item.get(0),item.get(1)});
-//					price.add(item.get(1));
-//					total = calculator.total(price);
-//					lblTotal.setText("Total: £"+ total);
-//					itemID.add(txtSearch.getText());
-//	
-//			 		//System.out.println("added--- " + item.get(0));
-//				}
-//				txtSearch.setText("");
+				dbQuery = new DBQuery("root","root");
+				dbQuery.connectDB();
+				item = dbQuery.getItem(txtSearch.getText());
+				
+				if(item.size() > 0){
+					model.addRow(new Object[]{item.get(0),item.get(1)});
+					price.add(item.get(1));
+					total = calculator.total(price);
+					lblTotal.setText("Total: £"+ total);
+					itemID.add(txtSearch.getText());
+	
+			 		//System.out.println("added--- " + item.get(0));
+				}
+				txtSearch.setText("");
 			}else if(btnAction.getText().equals("Remove")){
 				int colIndex = table.getSelectedColumn();
 				int r = table.getSelectedRow();
@@ -977,7 +1158,10 @@
 					
 				}
 				
-				else{
+				else if(btnAction.getText().equals("Reset Calendar")){
+					calendar.setDisplayDate(null);
+					
+				}else{
 						
 					if(table.getRowCount() == 0){
 						JOptionPane.showMessageDialog(null, "There are no items added, Please add Item");
@@ -1093,6 +1277,14 @@
 				itemID.add(id);
 				total = calculator.total(price);
 				lblTotal.setText("Total: £"+ total);
+		}
+
+		@Override
+		public void dateChanged(DateEvent arg0) {
+			// TODO Auto-generated method stub
+			
+			
+			txtDate.setText(calendar.getDate().toString());
 		}
 	}
 	 
