@@ -157,11 +157,7 @@ import javax.swing.AbstractListModel;
 		private String discountType;
 		private JTextField txtDate;
 		private JCalendar calendar;
-		private JList list,list_1;
-		private JPanel panel_26;
-		private JPanel panel_27;
-		private JPanel panel_29;
-		private JPanel panel_30;
+		private JList list;
 		private JPanel panel_31;
 		private JList list_2;
 		private JLabel lblNewLabel_1;
@@ -169,6 +165,9 @@ import javax.swing.AbstractListModel;
 		private JList list_3;
 		private JLabel lblNewLabel_2;
 		private JPanel panel_35;
+		private JPanel panel_36;
+		private JTabbedPane tabbedPane_1;
+		private JPanel panel_37;
 		
 		/**
 		 * Launch the application.
@@ -752,11 +751,11 @@ import javax.swing.AbstractListModel;
 		    calendar.setBorder(null);
 			calendar.setBackground(Color.WHITE);
 			calendar.addDateListener(this);
-			calendar.setBounds(10, 8, 457, 290);
+			calendar.setBounds(10, 8, 438, 277);
 			panel_21.add(calendar);
 			
 			txtDate = new JTextField();
-			txtDate.setBounds(475, 297, 303, 34);
+			txtDate.setBounds(804, 52, 303, 34);
 			panel_21.add(txtDate);
 			txtDate.setColumns(10);
 			
@@ -775,18 +774,32 @@ import javax.swing.AbstractListModel;
 					"Item 4"
 				};
 			
+			panel_36 = new JPanel();
+			panel_36.setBounds(0, 0, 10, 10);
+			panel_21.add(panel_36);
+			
+			tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+			tabbedPane_1.setBorder(new EmptyBorder(0, 0, 0, 0));
+			tabbedPane_1.setBounds(10, 287, 1405, 550);
+			panel_21.add(tabbedPane_1);
+			
+			panel_37 = new JPanel();
+			panel_37.setBorder(new EmptyBorder(0, 0, 0, 0));
+			tabbedPane_1.addTab("New tab", null, panel_37, null);
+			panel_37.setLayout(null);
+			
 			JPanel panel_25 = new JPanel();
-			panel_25.setBounds(10, 302, 221, 532);
-			panel_21.add(panel_25);
+			panel_25.setBounds(0, 0, 282, 532);
+			panel_37.add(panel_25);
 			panel_25.setLayout(null);
 			
 			JPanel panel_33 = new JPanel();
-			panel_33.setBounds(-1, 1, 225, 133);
+			panel_33.setBounds(-1, 1, 250, 133);
 			panel_25.add(panel_33);
 			panel_33.setLayout(null);
 			
 			list = new JList(listData);
-			list.setBounds(0, 17, 220, 114);
+			list.setBounds(0, 17, 255, 114);
 			panel_33.add(list);
 			list.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -799,7 +812,7 @@ import javax.swing.AbstractListModel;
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 			
 			panel_31 = new JPanel();
-			panel_31.setBounds(0, 134, 221, 132);
+			panel_31.setBounds(0, 134, 250, 132);
 			panel_25.add(panel_31);
 			panel_31.setLayout(null);
 			
@@ -844,38 +857,6 @@ import javax.swing.AbstractListModel;
 			lblNewLabel_3.setBounds(1, 0, 217, 16);
 			panel_35.add(lblNewLabel_3);
 			lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
-			
-			
-			panel_26 = new JPanel();
-			panel_26.setBounds(239, 343, 235, 447);
-			panel_21.add(panel_26);
-			
-			list_1 = new JList(listData);
-			panel_26.add(list_1);
-			list_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			list_1.setBackground(Color.WHITE);
-			list_1.setListData(listData);
-			list_1.setPreferredSize(new Dimension(200,200));
-			
-			panel_27 = new JPanel();
-			panel_27.setBounds(485, 342, 235, 445);
-			panel_21.add(panel_27);
-			
-			panel_29 = new JPanel();
-			panel_29.setBounds(714, 346, 235, 445);
-			panel_21.add(panel_29);
-			
-			panel_30 = new JPanel();
-			panel_30.setBounds(952, 346, 235, 445);
-			panel_21.add(panel_30);
-			
-			JPanel panel_32 = new JPanel();
-			panel_32.setBounds(481, 55, 298, 225);
-			panel_21.add(panel_32);
-						
-			JTabbedPane tabbedPane_3 = new JTabbedPane(JTabbedPane.TOP);
-			panel_32.add(tabbedPane_3);
 			Border emptyBorder = BorderFactory.createEmptyBorder();
 		    javax.swing.Timer timer = new javax.swing.Timer(TIMER_DELAY, new ActionListener() {
 		        public void actionPerformed(ActionEvent arg0) {
