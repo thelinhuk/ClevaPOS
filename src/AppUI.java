@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 	
 
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -11,13 +12,16 @@ import javax.swing.border.EmptyBorder;
 	
 
 
+
 import java.awt.GridLayout;
 	
+
 
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 	
+
 
 
 import java.awt.FlowLayout;
@@ -28,14 +32,17 @@ import java.awt.event.MouseListener;
 	
 
 
+
 import javax.swing.SwingConstants;
 	
+
 
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 	
+
 
 
 import javax.swing.BorderFactory;
@@ -50,9 +57,11 @@ import javax.swing.border.CompoundBorder;
 	
 
 
+
 import java.awt.Color;
 import java.awt.Font;
 	
+
 
 
 import javax.swing.UIManager;
@@ -63,9 +72,11 @@ import javax.swing.JTabbedPane;
 	
 
 
+
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 	
+
 
 
 import javax.swing.JList;
@@ -75,6 +86,7 @@ import javax.swing.table.DefaultTableModel;
 	
 
 
+
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -82,12 +94,17 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.awt.SystemColor;
 	
+
 import org.freixas.jcalendar.DateEvent;
 import org.freixas.jcalendar.DateListener;
 import org.freixas.jcalendar.JCalendar;
 import org.freixas.jcalendar.JCalendarCombo;
+
 import javax.swing.ListSelectionModel;
+
 import java.awt.Choice;
+import java.io.IOException;
+
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.AbstractListModel;
@@ -157,17 +174,10 @@ import javax.swing.AbstractListModel;
 		private String discountType;
 		private JTextField txtDate;
 		private JCalendar calendar;
-		private JList list;
-		private JPanel panel_31;
-		private JList list_2;
-		private JLabel lblNewLabel_1;
-		private JPanel panel_34;
-		private JList list_3;
-		private JLabel lblNewLabel_2;
-		private JPanel panel_35;
 		private JPanel panel_36;
 		private JTabbedPane tabbedPane_1;
-		private JPanel panel_37;
+		private JPanel panel_morning;
+		private JPanel panel_afternoon;
 		
 		/**
 		 * Launch the application.
@@ -177,6 +187,7 @@ import javax.swing.AbstractListModel;
 				public void run() {
 					try {
 						AppUI frame = new AppUI();
+						
 						frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -243,17 +254,6 @@ import javax.swing.AbstractListModel;
 			txtCustomerID.setHorizontalAlignment(SwingConstants.CENTER);
 			panel_22.add(txtCustomerID);
 			txtCustomerID.setColumns(10);
-			txtCustomerID.addFocusListener(new FocusListener(){
-				@Override
-				public void focusGained(FocusEvent arg0) {
-					//TODO Auto-generated method stub
-					isPaid = "customerID";	
-				}
-				@Override
-				public void focusLost(FocusEvent e) {
-					
-				}
-			});
 			
 			btnFind = new JButton("Add");
 			btnFind.setBounds(589, -1, 77, 58);
@@ -743,7 +743,7 @@ import javax.swing.AbstractListModel;
 			btnEnter.addActionListener(this);
 			
 			JPanel panel_21 = new JPanel();
-			tabbedPane.addTab("New tab", null, panel_21, null);
+			tabbedPane.addTab("Booking", null, panel_21, null);
 			panel_21.setLayout(null);
 			
 		    calendar = new JCalendar();
@@ -783,81 +783,28 @@ import javax.swing.AbstractListModel;
 			tabbedPane_1.setBounds(10, 287, 1405, 550);
 			panel_21.add(tabbedPane_1);
 			
-			panel_37 = new JPanel();
-			panel_37.setBorder(new EmptyBorder(0, 0, 0, 0));
-			tabbedPane_1.addTab("New tab", null, panel_37, null);
-			panel_37.setLayout(null);
-			
-			JPanel panel_25 = new JPanel();
-			panel_25.setBounds(0, 0, 282, 532);
-			panel_37.add(panel_25);
-			panel_25.setLayout(null);
-			
-			JPanel panel_33 = new JPanel();
-			panel_33.setBounds(-1, 1, 250, 133);
-			panel_25.add(panel_33);
-			panel_33.setLayout(null);
-			
-			list = new JList(listData);
-			list.setBounds(0, 17, 255, 114);
-			panel_33.add(list);
-			list.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			list.setBackground(Color.WHITE);
-			list.setListData(listData);
-			
-			JLabel lblNewLabel = new JLabel("9.00");
-			lblNewLabel.setBounds(1, 0, 222, 16);
-			panel_33.add(lblNewLabel);
-			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-			
-			panel_31 = new JPanel();
-			panel_31.setBounds(0, 134, 250, 132);
-			panel_25.add(panel_31);
-			panel_31.setLayout(null);
-			
-			list_2 = new JList(listData);
-			list_2.setBounds(-1, 20, 225, 114);
-			panel_31.add(list_2);
-			
-			lblNewLabel_1 = new JLabel("9.15");
-			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lblNewLabel_1.setBounds(1, 1, 224, 16);
-			panel_31.add(lblNewLabel_1);
-			
-			panel_34 = new JPanel();
-			panel_34.setBounds(-1, 265, 220, 132);
-			panel_25.add(panel_34);
-			panel_34.setLayout(null);
-			list_3 = new JList(listData);
-			list_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			list_3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			list_3.setListData(listData);
-			list_3.setBounds(0, 17, 219, 114);
-			panel_34.add(list_3);
-			
-			lblNewLabel_2 = new JLabel("9.30");
-			lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lblNewLabel_2.setBounds(2, -1, 225, 16);
-			panel_34.add(lblNewLabel_2);
-			
-			panel_35 = new JPanel();
-			panel_35.setBounds(0, 397, 220, 131);
-			panel_25.add(panel_35);
-			panel_35.setLayout(null);
-			
-			JList list_4 = new JList();
-			list_4.setBounds(1, 18, 218, 114);
-			list_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			list_4.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			list_4.setListData(listData);
-			panel_35.add(list_4);
-			
-			JLabel lblNewLabel_3 = new JLabel("9.45");
-			lblNewLabel_3.setBounds(1, 0, 217, 16);
-			panel_35.add(lblNewLabel_3);
-			lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+			panel_morning = new JPanel();
+			panel_morning.setBorder(new EmptyBorder(0, 0, 0, 0));
+			tabbedPane_1.addTab("Morning", null, panel_morning, null);
+			panel_morning.setLayout(new GridLayout(0, 5, 2, 0));
+			GridLayout layout = (GridLayout)panel_morning.getLayout();
+			int column = layout.getColumns();
+			System.out.println(column);
 			Border emptyBorder = BorderFactory.createEmptyBorder();
+			panel_afternoon = new JPanel();
+			BookingGrid bk_morning[] = new BookingGrid[5];
+			BookingGrid bk_afternoon[] = new BookingGrid[6];
+			int startHour = 9;
+			for(int i =0;i < column;i++){
+				bk_morning[i] = new BookingGrid();
+				bk_morning[i].initLabel(startHour +".");
+				startHour++;
+				panel_morning.add(bk_morning[i]);
+				
+			}
+			
+			tabbedPane_1.addTab("Afternoon", null, panel_afternoon, null);
+			panel_afternoon.setLayout(new GridLayout(0, 6, 0, 0));
 		    javax.swing.Timer timer = new javax.swing.Timer(TIMER_DELAY, new ActionListener() {
 		        public void actionPerformed(ActionEvent arg0) {
 		        	counter++;
@@ -908,7 +855,13 @@ import javax.swing.AbstractListModel;
 			Categories cats;
 			JButton btnAction = (JButton)e.getSource();
 		
-			
+			try {
+				  String sysroot = System.getenv("SystemRoot");
+				    Process proc = Runtime.getRuntime().exec(sysroot + "/system32/osk.exe");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			float customerPay = 0;
 			if(btnAction.getText().equals("List Items")){
 				cats = new Categories();
