@@ -1,101 +1,48 @@
- import java.awt.BorderLayout;
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
-
- import javax.swing.BorderFactory;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonModel;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
- 	
-
-
-
-
 import javax.swing.border.EmptyBorder;
-
- import java.awt.Color;
+import java.awt.Color;
 import java.awt.Font;
-
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JTabbedPane;
- 	
- 
-
-
-
-
-
-
-
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
- 	
-
-
-
-
-
-
-
-
-
- import javax.swing.JList;
+import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
- 	
-
-
-
-
-
-
-
-
-
- import java.sql.Time;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.awt.SystemColor;
- 	
-
-
-
-
-
-
-
-
-
 import org.freixas.jcalendar.DateEvent;
 import org.freixas.jcalendar.DateListener;
 import org.freixas.jcalendar.JCalendar;
 import org.freixas.jcalendar.JCalendarCombo;
-
- import javax.swing.ListSelectionModel;
-
+import javax.swing.ListSelectionModel;
 import java.awt.Choice;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.*;
-
-	
-	
+import java.awt.Desktop;
+import java.awt.Dimension;
 	
 public class AppUI extends JFrame implements ActionListener, DateListener{
 	
@@ -162,7 +109,17 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 		private JTabbedPane tabbedPane_1;
 		private JPanel panel_morning;
 		private JPanel panel_afternoon;
-		
+		private JList list;
+		private JPanel panel_31;
+		private JList list_2;
+		private JLabel lblNewLabel_1;
+ 		private JPanel panel_34;
+ 		private JList list_3;
+ 		private JLabel lblNewLabel_2;
+ 		private JPanel panel_35;
+ 		private JTextField txtCustomerName, txtPhoneNumber;
+ 		private JComboBox cmbNumberofPeople, cmbAppointmentTime;
+		 
 		/**
 		 * Launch the application.
 		 */
@@ -238,6 +195,17 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 			txtCustomerID.setHorizontalAlignment(SwingConstants.CENTER);
 			panel_22.add(txtCustomerID);
 			txtCustomerID.setColumns(10);
+			txtCustomerID.addFocusListener(new FocusListener(){
+				@Override
+				public void focusGained(FocusEvent arg0) {
+					//TODO Auto-generated method stub
+					isPaid = "customerID";	
+				}
+				@Override
+				public void focusLost(FocusEvent e) {
+					
+				}
+			});
 			
 			btnFind = new JButton("Add");
 			btnFind.setBounds(589, -1, 77, 58);
@@ -482,7 +450,7 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 			txtPaid.setText("0.00");
 			txtPaid.setHorizontalAlignment(SwingConstants.CENTER);
 			txtPaid.setFont(new Font("Tahoma", Font.BOLD, 26));
-			txtPaid.setBounds(-1, 0, 335, 66);
+			txtPaid.setBounds(-1, 0, 355, 66);
 			txtPaid.addFocusListener(new FocusListener(){
 				@Override
 				public void focusGained(FocusEvent arg0) {
@@ -687,7 +655,7 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 			panel_10.setLayout(null);
 			
 			btnZero = new JButton("0");
-			btnZero.setBounds(0, 0, 170, 85);
+			btnZero.setBounds(0, 0, 177, 85);
 			btnZero.setForeground(Color.WHITE);
 			btnZero.setFont(new Font("Tahoma", Font.BOLD, 24));
 			btnZero.setBackground(new Color(27, 188, 155));
@@ -696,7 +664,7 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 			panel_10.add(btnZero);
 			
 			btnDot = new JButton(".");
-			btnDot.setBounds(170, 0, 338, 85);
+			btnDot.setBounds(178, 0, 356, 85);
 			btnDot.setForeground(Color.WHITE);
 			btnDot.setFont(new Font("Tahoma", Font.BOLD, 24));
 			btnDot.setBackground(new Color(27, 188, 155));
@@ -705,7 +673,7 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 			panel_10.add(btnDot);
 			
 			btnFiftyPnd = new JButton("£ 50");
-			btnFiftyPnd.setBounds(509, 0, 168, 85);
+			btnFiftyPnd.setBounds(534, 0, 178, 85);
 			btnFiftyPnd.setForeground(Color.WHITE);
 			btnFiftyPnd.setFont(new Font("Tahoma", Font.BOLD, 24));
 			btnFiftyPnd.setBackground(new Color(44, 91, 166));
@@ -737,14 +705,9 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 			calendar.setBounds(10, 8, 438, 277);
 			panel_21.add(calendar);
 			
-			txtDate = new JTextField();
-			txtDate.setBounds(804, 52, 303, 34);
-			panel_21.add(txtDate);
-			txtDate.setColumns(10);
-			
 			btnResetDate = new JButton("Reset Date");
 			
-			btnResetDate.setBounds(475, 8, 109, 34);
+			btnResetDate.setBounds(98, 232, 125, 51);
 			btnResetDate.addActionListener(this);
 			
 			panel_21.add(btnResetDate);
@@ -756,6 +719,10 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 					"Item 3",
 					"Item 4"
 				};
+			
+			JButton btnNewButton = new JButton("Submit");
+ 		    btnNewButton.setBounds(628, 232, 125, 51);
+ 		    panel_21.add(btnNewButton);
 			
 			panel_36 = new JPanel();
 			panel_36.setBounds(0, 0, 10, 10);
@@ -786,8 +753,82 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 				
 			}
 			
+			txtCustomerName = new JTextField();
+	 		tp = new TextPrompt("Customer name", txtCustomerName);
+	 		tp.setFont(new Font("Tahoma", Font.PLAIN, 16));
+	 		tp.setHorizontalAlignment(SwingConstants.LEADING);
+	 		tp.setForeground(Color.LIGHT_GRAY);
+	 		txtCustomerName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+	 		txtCustomerName.setBounds(498, 42, 224, 34);
+	 		panel_21.add(txtCustomerName);
+	 		txtCustomerName.setColumns(10);
+	 		txtCustomerName.addFocusListener(new FocusListener(){
+				@Override
+ 				public void focusGained(FocusEvent arg0) {
+ 				    keyboardShow();
+ 		     	}
+ 		        @Override
+ 		        public void focusLost(FocusEvent e) {
+ 		        	keyboardHide();
+ 		        }
+ 			});
+			
+	 		txtDate = new JTextField();
+	 		tp = new TextPrompt("Select a date from calendar", txtDate);
+	 		tp.setFont(new Font("Tahoma", Font.PLAIN, 16));
+	 		tp.setHorizontalAlignment(SwingConstants.LEADING);
+	 		tp.setForeground(Color.LIGHT_GRAY);
+	 		txtDate.setFont(new Font("Tahoma", Font.PLAIN, 16));
+	 		txtDate.setBounds(498, 78, 254, 34);
+	 		panel_21.add(txtDate);
+	 		txtDate.setColumns(10);
+	 		
+	 		txtPhoneNumber = new JTextField();
+	 		tp = new TextPrompt("Cuatomer's phone number", txtPhoneNumber);
+	 		
+	 		tp.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			tp.setHorizontalAlignment(SwingConstants.LEADING);
+			tp.setForeground(Color.LIGHT_GRAY);
+			txtPhoneNumber.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			txtPhoneNumber.setColumns(10);
+			txtPhoneNumber.setBounds(498, 152, 224, 34);
+			panel_21.add(txtPhoneNumber);
+			txtPhoneNumber.addFocusListener(new FocusListener(){
+				@Override
+				public void focusGained(FocusEvent arg0) {
+					keyboardShow();
+				}
+				@Override
+				public void focusLost(FocusEvent e) {
+					keyboardHide();
+				}
+			});
+
+			cmbAppointmentTime = new JComboBox();
+			cmbAppointmentTime.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			cmbAppointmentTime.setModel(new DefaultComboBoxModel(new String[] {"Select a time", "9.00 AM", "9.15 AM", "9.30 AM", "9.45 AM", "10.00 AM"}));
+			cmbAppointmentTime.setBounds(498, 114, 134, 35);
+			panel_21.add(cmbAppointmentTime);
+			
+			cmbNumberofPeople = new JComboBox();
+			cmbNumberofPeople.setModel(new DefaultComboBoxModel(new String[] {"No. of people", "1 Person", "2 People", "3 People", "4 People", "5 People"}));
+			cmbNumberofPeople.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			cmbNumberofPeople.setBounds(498, 188, 134, 34);
+			panel_21.add(cmbNumberofPeople);
+			
+			JLabel lblNewLabel_4 = new JLabel("Booking details");
+			lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			lblNewLabel_4.setBounds(498, 8, 224, 34);
+			panel_21.add(lblNewLabel_4);
+			
+			
 			tabbedPane_1.addTab("Afternoon", null, panel_afternoon, null);
 			panel_afternoon.setLayout(new GridLayout(0, 6, 0, 0));
+			
+			JButton btnClearBookingForm = new JButton("Clear");
+			btnClearBookingForm.setBounds(498, 232, 129, 51);
+			panel_21.add(btnClearBookingForm);
 		    javax.swing.Timer timer = new javax.swing.Timer(TIMER_DELAY, new ActionListener() {
 		        public void actionPerformed(ActionEvent arg0) {
 		        	counter++;
@@ -828,6 +869,28 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 		    });
 		    timer2.start();
 	
+		}
+		
+		private void keyboardShow() {
+			Desktop desktop = null;
+			if (Desktop.isDesktopSupported()) 
+			{
+			   desktop = Desktop.getDesktop();
+			}
+			String sysroot = System.getenv("SystemRoot");
+			try {
+				desktop.open(new File(sysroot+"/system32/osk.exe"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	
+		private void keyboardHide() {
+			try {
+				Runtime.getRuntime().exec("taskkill /IM osk.exe");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 	
 		public void actionPerformed(ActionEvent e) {
@@ -1202,8 +1265,6 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 			
 			txtDate.setText(calendar.getDate().toString());
 		}
-
-	
 	}
 	 
 	
