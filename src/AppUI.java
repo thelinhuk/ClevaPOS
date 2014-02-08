@@ -5,65 +5,30 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
 
- import javax.swing.BorderFactory;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonModel;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
  	
-
-
-
-
 import javax.swing.border.EmptyBorder;
-
- import java.awt.Color;
+import java.awt.Color;
 import java.awt.Font;
-
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JTabbedPane;
- 	
- 
-
-
-
-
-
-
-
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
  	
-
-
-
-
-
-
-
-
-
- import javax.swing.JList;
+import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
  	
-
-
-
-
-
-
-
-
-
- import java.sql.Time;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -71,21 +36,12 @@ import java.util.*;
 import java.awt.SystemColor;
  	
 
-
-
-
-
-
-
-
-
 import org.freixas.jcalendar.DateEvent;
 import org.freixas.jcalendar.DateListener;
 import org.freixas.jcalendar.JCalendar;
 import org.freixas.jcalendar.JCalendarCombo;
 
- import javax.swing.ListSelectionModel;
-
+import javax.swing.ListSelectionModel;
 import java.awt.Choice;
 import java.io.File;
 import java.io.IOException;
@@ -772,22 +728,32 @@ public class AppUI extends JFrame implements ActionListener, DateListener{
 			panel_morning.setLayout(new GridLayout(0, 5, 2, 0));
 			GridLayout layout = (GridLayout)panel_morning.getLayout();
 			int column = layout.getColumns();
-			System.out.println(column);
+			
 			Border emptyBorder = BorderFactory.createEmptyBorder();
 			panel_afternoon = new JPanel();
 			BookingGrid bk_morning[] = new BookingGrid[5];
 			BookingGrid bk_afternoon[] = new BookingGrid[6];
-			int startHour = 9;
+			int startHourMn = 9;
 			for(int i =0;i < column;i++){
 				bk_morning[i] = new BookingGrid();
-				bk_morning[i].initLabel(startHour +".");
-				startHour++;
+				bk_morning[i].initLabel(startHourMn +".");
+				startHourMn++;
 				panel_morning.add(bk_morning[i]);
 				
 			}
-			
 			tabbedPane_1.addTab("Afternoon", null, panel_afternoon, null);
-			panel_afternoon.setLayout(new GridLayout(0, 6, 0, 0));
+			panel_afternoon.setLayout(new GridLayout(0, 6, 2, 2));
+			layout = (GridLayout)panel_afternoon.getLayout();
+			column =  layout.getColumns();
+			int startHourAt = 14;
+			for(int i =0;i < column;i++){
+				bk_afternoon[i] = new BookingGrid();
+				bk_afternoon[i].initLabel(startHourAt +".");
+				startHourAt++;
+				panel_afternoon.add(bk_afternoon[i]);
+				
+			}
+			
 		    javax.swing.Timer timer = new javax.swing.Timer(TIMER_DELAY, new ActionListener() {
 		        public void actionPerformed(ActionEvent arg0) {
 		        	counter++;
